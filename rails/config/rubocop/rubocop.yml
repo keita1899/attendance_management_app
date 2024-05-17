@@ -1,4 +1,5 @@
 AllCops:
+  SuggestExtensions: false
   Exclude:
     - "node_modules/**/*" # rubocop config/default.yml
     - "vendor/**/*" # rubocop config/default.yml
