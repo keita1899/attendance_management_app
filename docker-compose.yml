@@ -12,7 +12,7 @@ services:
   web:
     build:
       context: ./rails
-    command: bash -c "bundle exec rails s -b '0.0.0.0'"
+    command: bash -c "rm -f /myapp/tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
     volumes:
       - ./rails:/myapp
     ports:
