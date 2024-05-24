@@ -7,9 +7,18 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'layouts/header' %>
+    <% flash.each do |key, message| %>
+      <div class="alert <%= flash_class(key) %>" role="alert">
+        <%= message %>
+      </div>
+    <% end %>
+    <div class="container py-5">
+      <%= yield %>
+    </div>
   </body>
 </html>
