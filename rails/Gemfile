@@ -53,7 +53,7 @@ gem "rails-i18n"
 
 gem "devise"
 
-gem "bootstrap", "~> 5.3.0"
+gem "bootstrap", "~> 5.3.3"
 gem "jquery-rails"
 
 group :development, :test do
