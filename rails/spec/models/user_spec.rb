@@ -1,10 +1,6 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
-  before do
-    I18n.locale = :ja
-  end
-
   describe "サインアップ" do
     let(:user) { FactoryBot.build(:user) }
 
@@ -134,6 +130,39 @@ RSpec.describe User, type: :model do
         user.password_confirmation = "different"
         expect(user).not_to be_valid
         expect(user.errors[:password_confirmation]).to include("とパスワードの入力が一致しません")
+      end
+    end
+  end
+
+  describe "サインイン" do
+    let(:user) { FactoryBot.create(:user) }
+
+    context "ログインが成功する時" do
+      it "正しいメールアドレスとパスワードが入力されている時" do
+        expect(user.valid_password?("password")).to be true
+      end
+    end
+
+    context "ログインが失敗する時" do
+      it "メールアドレスが空だとログインできない" do
+        user.email = nil
+        expect(user).not_to be_valid
+        expect(user.errors[:email]).to include("を入力してください")
+      end
+
+      it "パスワードが空だとログインできない" do
+        user.password = nil
+        expect(user).not_to be_valid
+        expect(user.errors[:password]).to include("を入力してください")
+      end
+
+      it "メールアドレスが異なるとログインできない" do
+        invalid_user = User.new(email: "invalid@example.com", password: "password")
+        expect(invalid_user.valid_password?("password")).to be false
+      end
+
+      it "パスワードが異なるとログインできない" do
+        expect(user.valid_password?("different")).to be false
       end
     end
   end

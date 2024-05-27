@@ -6,6 +6,14 @@ RSpec.describe "Users", type: :request do
       get new_user_registration_path
       expect(response).to have_http_status(:ok)
     end
+
+    it "ログイン済みでユーザー登録画面にアクセスするとルートにリダイレクトされる" do
+      user = FactoryBot.create(:user)
+      sign_in user
+
+      get new_user_registration_path
+      expect(response).to redirect_to(root_path)
+    end
   end
 
   describe "POST /users" do
@@ -22,6 +30,33 @@ RSpec.describe "Users", type: :request do
         } }
       }.to change { User.count }.by(1)
       expect(response).to have_http_status(:see_other)
+    end
+  end
+
+  describe "GET /users/sign_in" do
+    it "未ログイン時にログイン画面にアクセス成功する" do
+      get new_user_session_path
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "ログイン済みでログイン画面にアクセスするとルートにリダイレクトされる" do
+      user = FactoryBot.create(:user)
+      sign_in user
+
+      get new_user_session_path
+      expect(response).to redirect_to(root_path)
+    end
+  end
+
+  describe "POST /users/sign_in" do
+    let(:user) { FactoryBot.create(:user) }
+
+    it "ログイン画面でフォームを送信してログインに成功する" do
+      post user_session_path, params: { user: {
+        email: user.email,
+        password: user.password,
+      } }
+      expect(response).to redirect_to(root_path)
     end
   end
 end
