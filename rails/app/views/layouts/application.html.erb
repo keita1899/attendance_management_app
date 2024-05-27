@@ -13,7 +13,7 @@
   <body>
     <%= render 'layouts/header' %>
     <% flash.each do |key, message| %>
-      <div class="alert <%= flash_class(key) %>" role="alert">
+      <div class="alert <%= flash_class(key) %> text-center" role="alert">
         <%= message %>
       </div>
     <% end %>
