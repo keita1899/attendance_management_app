@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
-  describe "サインアップ" do
+  describe "ユーザー登録" do
     let(:user) { FactoryBot.build(:user) }
 
     context "新規登録が成功する時" do
@@ -134,7 +134,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "サインイン" do
+  describe "ログイン" do
     let(:user) { FactoryBot.create(:user) }
 
     context "ログインが成功する時" do
@@ -157,8 +157,8 @@ RSpec.describe User, type: :model do
       end
 
       it "メールアドレスが異なるとログインできない" do
-        invalid_user = User.new(email: "invalid@example.com", password: "password")
-        expect(invalid_user.valid_password?("password")).to be false
+        invalid_user = User.find_by(email: "invalid@example.com")
+        expect(invalid_user).to be_nil
       end
 
       it "パスワードが異なるとログインできない" do
