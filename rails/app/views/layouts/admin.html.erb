@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Myapp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <%= render 'layouts/header' %>
+    <% flash.each do |key, message| %>
+      <div class="alert <%= flash_class(key) %> text-center" role="alert">
+        <%= message %>
+      </div>
+    <% end %>
+    <div class="container py-5 d-flex">
+      <aside class="">
+        <ul class="">
+          <li class="">
+            ユーザー
+          </li>
+          <li class="">
+            特別日
+          </li>
+          <li class="">
+            勤怠
+          </li>
+        </ul>
+      </aside>
+      <main class="">
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>
