@@ -20,8 +20,8 @@ RSpec.describe "Users", type: :system do
     fill_in "パスワード", with: user_info[:password]
   end
 
-  describe "ユーザー登録" do
-    let(:valid_user_info) do
+  describe "アカウント登録" do
+    let!(:valid_user_info) do
       {
         last_name: "山田",
         first_name: "太郎",
@@ -33,7 +33,7 @@ RSpec.describe "Users", type: :system do
       }
     end
 
-    let(:invalid_user_info) do
+    let!(:invalid_user_info) do
       {
         last_name: "山田",
         first_name: "太郎",
@@ -45,62 +45,97 @@ RSpec.describe "Users", type: :system do
       }
     end
 
-    it "ユーザー登録が成功する" do
-      visit new_user_registration_path
-      fill_in_registration_form(valid_user_info)
-      click_button "登録"
+    context "未ログインの場合" do
+      it "アカウント登録が成功する" do
+        visit new_user_registration_path
+        fill_in_registration_form(valid_user_info)
+        click_button "登録"
 
-      expect(page).to have_content("アカウント登録が完了しました")
-      expect(User.find_by(email: "test@example.com")).not_to be_nil
+        expect(page).to have_content("アカウント登録が完了しました")
+        expect(User.find_by(email: "test@example.com")).not_to be_nil
+      end
+
+      it "アカウント登録が失敗する" do
+        visit new_user_registration_path
+        fill_in_registration_form(invalid_user_info)
+        click_button "登録"
+
+        expect(page).to have_content("アカウント登録に失敗しました")
+        expect(User.find_by(email: "test@example.com")).to be_nil
+      end
     end
 
-    it "ユーザー登録が失敗する" do
-      visit new_user_registration_path
-      fill_in_registration_form(invalid_user_info)
-      click_button "登録"
+    context "ログイン済みの場合" do
+      let!(:user) { FactoryBot.create(:user, email: "test@example.com", password: "password") }
+      let!(:valid_login_info) { { email: "test@example.com", password: "password" } }
 
-      expect(page).to have_content("アカウント登録に失敗しました")
-      expect(User.find_by(email: "test@example.com")).to be_nil
+      before do
+        visit new_user_session_path
+        fill_in_login_form(valid_login_info)
+        click_button "ログイン"
+      end
+
+      it "アカウント登録ページに遷移しようとするとカレンダーページにリダイレクトされる" do
+        visit new_user_registration_path
+
+        expect(page).to have_current_path(root_path)
+        expect(page).to have_content("すでにログイン済みです")
+      end
     end
   end
 
   describe "ログイン" do
-    before do
-      FactoryBot.create(:user, email: "test@example.com", password: "password")
+    let!(:user) { FactoryBot.create(:user, email: "test@example.com", password: "password") }
+    let!(:valid_login_info) { { email: "test@example.com", password: "password" } }
+    let!(:invalid_email_info) { { email: "different@example.com", password: "password" } }
+    let!(:invalid_password_info) { { email: "test@example.com", password: "different" } }
+
+    context "未ログインの場合" do
+      it "ログインが成功する" do
+        visit new_user_session_path
+        fill_in_login_form(valid_login_info)
+        click_button "ログイン"
+        expect(page).to have_content("ログインしました")
+        expect(page).to have_link("ログアウト")
+        expect(User.find_by(email: "test@example.com")).not_to be_nil
+      end
+
+      it "間違ったメールアドレスでログインが失敗する" do
+        visit new_user_session_path
+        fill_in_login_form(invalid_email_info)
+        click_button "ログイン"
+
+        expect(page).to have_content("メールアドレスかパスワードが間違っています")
+      end
+
+      it "間違ったパスワードでログインが失敗する" do
+        visit new_user_session_path
+        fill_in_login_form(invalid_password_info)
+        click_button "ログイン"
+
+        expect(page).to have_content("メールアドレスかパスワードが間違っています")
+      end
     end
 
-    let(:valid_login_info) { { email: "test@example.com", password: "password" } }
-    let(:invalid_email_info) { { email: "different@example.com", password: "password" } }
-    let(:invalid_password_info) { { email: "test@example.com", password: "different" } }
+    context "ログイン済みの場合" do
+      before do
+        visit new_user_session_path
+        fill_in_login_form(valid_login_info)
+        click_button "ログイン"
+      end
 
-    it "ログインが成功する" do
-      visit new_user_session_path
-      fill_in_login_form(valid_login_info)
-      click_button "ログイン"
-      expect(page).to have_content("ログインしました")
-      expect(User.find_by(email: "test@example.com")).not_to be_nil
-    end
+      it "ログインページに遷移しようとするとカレンダーページにリダイレクトされる" do
+        visit new_user_session_path
 
-    it "間違ったメールアドレスでログインが失敗する" do
-      visit new_user_session_path
-      fill_in_login_form(invalid_email_info)
-      click_button "ログイン"
-
-      expect(page).to have_content("メールアドレスかパスワードが間違っています")
-    end
-
-    it "間違ったパスワードでログインが失敗する" do
-      visit new_user_session_path
-      fill_in_login_form(invalid_password_info)
-      click_button "ログイン"
-
-      expect(page).to have_content("メールアドレスかパスワードが間違っています")
+        expect(page).to have_current_path(root_path)
+        expect(page).to have_content("すでにログイン済みです")
+      end
     end
   end
 
   describe "ログアウト" do
     let!(:user) { FactoryBot.create(:user, email: "test@example.com", password: "password") }
-    let(:valid_login_info) { { email: "test@example.com", password: "password" } }
+    let!(:valid_login_info) { { email: "test@example.com", password: "password" } }
 
     before do
       visit new_user_session_path
@@ -111,9 +146,9 @@ RSpec.describe "Users", type: :system do
     it "ログアウトが成功する" do
       click_link "ログアウト"
       expect(page).to have_content("ログアウトしました")
-      expect(page).to have_current_path(root_path)
+      expect(page).to have_current_path(new_user_session_path)
       expect(page).to have_link("ログイン")
-      expect(page).to have_link("ユーザー登録")
+      expect(page).to have_link("アカウント登録")
       expect(page).not_to have_link("ログアウト")
     end
   end

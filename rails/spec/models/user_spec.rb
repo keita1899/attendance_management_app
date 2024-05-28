@@ -1,6 +1,14 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
+  describe "フルネームを取得" do
+    let(:user) { FactoryBot.build(:user) }
+
+    it "フルネームを取得できる" do
+      expect(user.full_name).to eq("山田太郎")
+    end
+  end
+
   describe "ユーザー登録" do
     let(:user) { FactoryBot.build(:user) }
 

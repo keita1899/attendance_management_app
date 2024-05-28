@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, authentication_keys: [:email]
 
   ZENKAKU_REGEX = /\A[ぁ-んァ-ン一-龥々ー]+\z/
   KATAKANA_REGEX = /\A[ァ-ヶー－]+\z/
@@ -10,4 +10,8 @@ class User < ApplicationRecord
   validates :last_name_kana, presence: true, format: { with: KATAKANA_REGEX, message: "はカタカナで入力してください" }
   validates :first_name_kana, presence: true, format: { with: KATAKANA_REGEX, message: "はカタカナで入力してください" }
   validates :password_confirmation, presence: true
+
+  def full_name
+    last_name + first_name
+  end
 end
