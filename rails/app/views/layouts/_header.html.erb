@@ -9,7 +9,9 @@
         <ul class="navbar-nav ms-auto mb-lg-0 text-center">
           <% if user_signed_in? || admin_signed_in? %>
             <li class="nav-item">
-              <%= username %>
+              <span class="nav-link">
+                <%= username %>
+              </span>
             </li>
             <li class="nav-item">
               <%= logout_link %>
