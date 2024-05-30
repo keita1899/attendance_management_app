@@ -1,39 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Myapp</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Myapp</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
 
-  <body>
-    <%= render 'layouts/header' %>
-    <% flash.each do |key, message| %>
-      <div class="alert <%= flash_class(key) %> text-center" role="alert">
-        <%= message %>
-      </div>
-    <% end %>
-    <div class="container py-5 d-flex">
-      <aside class="">
-        <ul class="">
-          <li class="">
+<body class="d-flex flex-column min-vh-100">
+  <div class="d-flex flex-grow-1">
+    <aside class=" col-2 pt-5 flex-grow-1  d-flex flex-column h-100">
+      <ul class="list-group list-group-flush pt-5">
+        <li class="list-group-item">
+          <span class="ms-3">
             ユーザー
-          </li>
-          <li class="">
+          </span>
+        </li>
+        <li class="list-group-item">
+          <span class="ms-3">
+            勤怠管理
+          </span>
+        </li>
+        <li class="list-group-item">
+          <span class="ms-3">
             特別日
-          </li>
-          <li class="">
-            勤怠
-          </li>
-        </ul>
-      </aside>
-      <main class="">
-        <%= yield %>
+          </span>
+        </li>
+      </ul>
+    </aside>
+    <div class="col-10 d-flex flex-column h-100">
+      <%= render 'layouts/header' %>
+      <%= render 'layouts/flash_message' %>
+      <main class="main p-5 flex-grow-1">
+        <div class="p-5 bg-white">
+          <%= yield %>
+        </div>
       </main>
     </div>
-  </body>
+  </div>
+</body>
 </html>
