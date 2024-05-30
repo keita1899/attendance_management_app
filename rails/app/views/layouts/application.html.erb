@@ -12,11 +12,7 @@
 
   <body>
     <%= render 'layouts/header' %>
-    <% flash.each do |key, message| %>
-      <div class="alert <%= flash_class(key) %> text-center" role="alert">
-        <%= message %>
-      </div>
-    <% end %>
+    <%= render 'layouts/flash_message' %>
     <div class="container py-5">
       <%= yield %>
     </div>
