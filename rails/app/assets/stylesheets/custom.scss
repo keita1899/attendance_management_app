@@ -1,0 +1,13 @@
+$main-color: #ddd;
+
+html, body {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.main {
+  background-color: $main-color;
+}
