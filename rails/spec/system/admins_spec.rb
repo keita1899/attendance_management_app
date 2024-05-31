@@ -43,7 +43,7 @@ RSpec.describe "Admins", type: :system do
         click_button "ログイン"
 
         expect(Admin.find_by(name: "admin")).not_to be_nil
-        expect(page).to have_current_path(admins_dashboard_index_path)
+        expect(page).to have_current_path(admins_root_path)
         expect(page).to have_content("ログインしました")
         expect(page).to have_link("ログアウト")
       end
@@ -75,7 +75,7 @@ RSpec.describe "Admins", type: :system do
       it "管理ユーザーログインページに遷移しようとすると管理ダッシュボードにリダイレクトされる" do
         visit new_admin_session_path
 
-        expect(page).to have_current_path(admins_dashboard_index_path)
+        expect(page).to have_current_path(admins_root_path)
         expect(page).to have_content("すでにログイン済みです")
       end
     end
