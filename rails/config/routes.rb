@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   }
 
   namespace :admins do
-    resources :dashboard, only: [:index]
     root to: "dashboard#index"
+    resources :users
   end
 
   root "calendars#index"
