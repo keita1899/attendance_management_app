@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe User, type: :model do
   describe "フルネームを取得" do
-    let(:user) { FactoryBot.build(:user) }
+    let(:user) { build(:user) }
 
     it "フルネームを取得できる" do
       expect(user.full_name).to eq("山田太郎")
@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "ユーザー登録" do
-    let(:user) { FactoryBot.build(:user) }
+    let(:user) { build(:user) }
 
     context "新規登録が成功する時" do
       it "全ての項目が正しく入力されている時" do
@@ -86,7 +86,7 @@ RSpec.describe User, type: :model do
       end
 
       it "メールアドレスがすでに登録されていると登録できない" do
-        FactoryBot.create(:user, email: "test@example.com")
+        create(:user, email: "test1@example.com")
         expect(user).not_to be_valid
         expect(user.errors[:email]).to include("はすでに存在します")
       end
@@ -143,7 +143,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "ログイン" do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { create(:user) }
 
     context "ログインが成功する時" do
       it "正しいメールアドレスとパスワードが入力されている時" do

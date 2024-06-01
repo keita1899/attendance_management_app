@@ -66,7 +66,7 @@ RSpec.describe "Users", type: :system do
     end
 
     context "ログイン済みの場合" do
-      let!(:user) { FactoryBot.create(:user, email: "test@example.com", password: "password") }
+      let!(:user) { create(:user, email: "test@example.com", password: "password") }
       let!(:valid_login_info) { { email: "test@example.com", password: "password" } }
 
       before do
@@ -85,7 +85,7 @@ RSpec.describe "Users", type: :system do
   end
 
   describe "ログイン" do
-    let!(:user) { FactoryBot.create(:user, email: "test@example.com", password: "password") }
+    let!(:user) { create(:user, email: "test@example.com", password: "password") }
     let!(:valid_login_info) { { email: "test@example.com", password: "password" } }
     let!(:invalid_email_info) { { email: "different@example.com", password: "password" } }
     let!(:invalid_password_info) { { email: "test@example.com", password: "different" } }
@@ -134,7 +134,7 @@ RSpec.describe "Users", type: :system do
   end
 
   describe "ログアウト" do
-    let!(:user) { FactoryBot.create(:user, email: "test@example.com", password: "password") }
+    let!(:user) { create(:user, email: "test@example.com", password: "password") }
     let!(:valid_login_info) { { email: "test@example.com", password: "password" } }
 
     before do

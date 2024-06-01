@@ -12,7 +12,7 @@ RSpec.describe "Admins", type: :system do
 
   describe "管理ユーザーログイン" do
     before do
-      FactoryBot.create(:admin, name: "admin", password: "password")
+      create(:admin, name: "admin", password: "password")
     end
 
     let(:valid_admin_info) do
@@ -82,7 +82,7 @@ RSpec.describe "Admins", type: :system do
   end
 
   describe "管理ユーザーログアウト" do
-    let!(:admin) { FactoryBot.create(:admin, name: "admin", password: "password") }
+    let!(:admin) { create(:admin, name: "admin", password: "password") }
     let!(:valid_login_info) { { name: "admin", password: "password" } }
 
     before do
