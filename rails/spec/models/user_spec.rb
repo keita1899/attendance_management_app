@@ -86,7 +86,8 @@ RSpec.describe User, type: :model do
       end
 
       it "メールアドレスがすでに登録されていると登録できない" do
-        create(:user, email: "test1@example.com")
+        create(:user, email: 'test@example.com')
+        user = build(:user, email: 'test@example.com')
         expect(user).not_to be_valid
         expect(user.errors[:email]).to include("はすでに存在します")
       end
