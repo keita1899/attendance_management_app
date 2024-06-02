@@ -11,3 +11,27 @@ a {
 .main {
   background-color: $main-color;
 }
+
+.pagination > li {
+  margin-left: 5px;
+}
+
+.pagination > li > a {          
+  background-color: #808080;
+  color: white;
+  border: none;
+  border-radius: 3px;
+}
+
+.pagination > .active > a {     
+  background: #000; 
+  border-radius: 3px;
+}
+
+.pagination > .disabled > a {     
+  background: #fff; 
+}
+
+.pagination > li > a:hover {        
+  color: #808080;
+}

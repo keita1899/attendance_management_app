@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Admin, type: :model do
   describe "管理ユーザーログイン" do
-    let(:admin) { FactoryBot.create(:admin) }
+    let(:admin) { create(:admin) }
 
     context "ログインが成功する時" do
       it "正しいユーザー名とパスワードが入力されている時" do
