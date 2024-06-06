@@ -2,7 +2,7 @@
   <div class="col-md-6">
     <h2 class="text-center"><%= t('.sign_in') %></h2>
     <%= form_with model: @user, url: session_path(resource_name), local: true, class: 'mt-5' do |f| %>
-      <%= render "users/shared/error_messages", resource: resource %>
+      <%= render "layouts/error_messages", resource: resource %>
       <div class="form-group">
         <%= f.label :email, class: 'form-label' %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control #{'alert alert-danger' if resource.errors[:email].any?}" %>

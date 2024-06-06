@@ -1,5 +1,5 @@
 100.times do |n|
-  User.create!(
+  user = User.create!(
     last_name: "山田",
     first_name: "太郎",
     last_name_kana: "ヤマダ",
@@ -7,6 +7,10 @@
     email: "test#{n}@example.com",
     password: "password",
     password_confirmation: "password",
+  )
+  user.create_wage(
+    weekday_rate: 1000,
+    weekend_rate: 1100,
   )
 end
 

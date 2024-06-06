@@ -2,6 +2,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, authentication_keys: [:email]
 
+  has_one :wage, dependent: :destroy
+
   ZENKAKU_REGEX = /\A[ぁ-んァ-ン一-龥々ー]+\z/
   KATAKANA_REGEX = /\A[ァ-ヶー－]+\z/
 

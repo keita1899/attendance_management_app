@@ -73,4 +73,53 @@ RSpec.describe "Admins::Users", type: :system do
       end
     end
   end
+
+  describe "管理画面ユーザー編集" do
+    let!(:admin) { create(:admin, name: "admin", password: "password") }
+
+    context "ログイン済みの場合" do
+      let!(:user) { create(:user) }
+      let!(:wage) { FactoryBot.create(:wage, user:) }
+
+      before do
+        sign_in admin
+      end
+
+      it "管理画面ユーザー編集画面にアクセスが成功する" do
+        visit edit_admins_user_path(user)
+        expect(page).to have_content("平日時給")
+        expect(page).to have_content("土日・祝日時給")
+        expect(page).to have_field("wage_weekday_rate", with: 1000)
+        expect(page).to have_field("wage_weekend_rate", with: 1100)
+      end
+
+      it "ユーザー情報の更新が成功する" do
+        visit edit_admins_user_path(user)
+        fill_in "平日時給", with: 1200
+        fill_in "土日・祝日時給", with: 1300
+        click_button "保存"
+        expect(page).to have_current_path(admins_users_path)
+      end
+    end
+
+    context "未ログインの場合" do
+      it "管理画面のユーザー編集画面にアクセスすると管理ログイン画面にリダイレクトされる" do
+        visit edit_admins_user_path(1)
+        expect(page).to have_current_path(new_admin_session_path)
+      end
+    end
+
+    context "一般ユーザーがアクセスする場合" do
+      let!(:user) { create(:user) }
+
+      before do
+        sign_in user
+      end
+
+      it "管理画面ユーザー編集画面にアクセスすると管理ログイン画面にリダイレクトされる" do
+        visit edit_admins_user_path(1)
+        expect(page).to have_current_path(new_admin_session_path)
+      end
+    end
+  end
 end
