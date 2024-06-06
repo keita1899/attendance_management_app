@@ -7,6 +7,10 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+    attributes:
+      wage:
+        weekday_rate: '平日時給'
+        weekend_rate: '土日・祝日時給'
   date:
     abbr_day_names:
     - 日
@@ -188,3 +192,5 @@ ja:
       previous: "&lsaquo;"
       next: "&rsaquo;"
       truncate: "&hellip;"
+  common:
+    save: '保存'
