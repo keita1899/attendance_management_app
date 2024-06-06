@@ -2,7 +2,7 @@
   <div class="col-md-6">
     <h2 class="text-center"><%= t('.sign_up') %></h2>
     <%= form_with model: @user, url: user_registration_path, local: true, class: 'mt-5' do |f| %>
-      <%= render "users/shared/error_messages", resource: resource %>
+      <%= render "layouts/error_messages", resource: resource %>
       <div class="row">
         <div class="form-group col-6">
           <%= f.label :last_name, class: 'form-label' %><br />
