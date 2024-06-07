@@ -70,9 +70,7 @@ RSpec.describe "Users", type: :system do
       let!(:valid_login_info) { { email: "test@example.com", password: "password" } }
 
       before do
-        visit new_user_session_path
-        fill_in_login_form(valid_login_info)
-        click_button "ログイン"
+        sign_in user
       end
 
       it "アカウント登録ページに遷移しようとするとカレンダーページにリダイレクトされる" do
@@ -119,9 +117,7 @@ RSpec.describe "Users", type: :system do
 
     context "ログイン済みの場合" do
       before do
-        visit new_user_session_path
-        fill_in_login_form(valid_login_info)
-        click_button "ログイン"
+        sign_in user
       end
 
       it "ログインページに遷移しようとするとカレンダーページにリダイレクトされる" do
@@ -135,15 +131,13 @@ RSpec.describe "Users", type: :system do
 
   describe "ログアウト" do
     let!(:user) { create(:user, email: "test@example.com", password: "password") }
-    let!(:valid_login_info) { { email: "test@example.com", password: "password" } }
 
     before do
-      visit new_user_session_path
-      fill_in_login_form(valid_login_info)
-      click_button "ログイン"
+      sign_in user
     end
 
     it "ログアウトが成功する" do
+      visit root_path
       click_link "ログアウト"
       expect(page).to have_content("ログアウトしました")
       expect(page).to have_current_path(new_user_session_path)
