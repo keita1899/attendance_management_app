@@ -147,17 +147,16 @@ RSpec.describe "Users", type: :system do
     end
   end
 
-
-  describe 'マイページ' do
-    context '未ログインの場合' do
-      it 'マイページにアクセスしようとするとログインページにリダイレクトされる' do
+  describe "マイページ" do
+    context "未ログインの場合" do
+      it "マイページにアクセスしようとするとログインページにリダイレクトされる" do
         visit mypage_path
 
         expect(page).to have_current_path(new_user_session_path)
       end
     end
 
-    context 'ログイン済みの場合' do
+    context "ログイン済みの場合" do
       let!(:user) { create(:user, email: "test@example.com", password: "password") }
       let!(:wage) { create(:wage, user:) }
 
@@ -165,7 +164,7 @@ RSpec.describe "Users", type: :system do
         sign_in user
       end
 
-      it 'マイページへのアクセスが成功する' do
+      it "マイページへのアクセスが成功する" do
         visit mypage_path
         expect(page).to have_title("マイページ")
         expect(page).to have_content("アカウント情報")
