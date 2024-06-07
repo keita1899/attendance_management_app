@@ -100,6 +100,7 @@ ja:
     failure:
       already_authenticated: "すでにログイン済みです"
       invalid: "ユーザー名かパスワードが間違っています"
+      unauthenticated: "ログイン認証されていません"
       admin:
         unauthenticated: "ログインに失敗しました"
         not_found_in_database: "ユーザー名かパスワードが間違っています"
