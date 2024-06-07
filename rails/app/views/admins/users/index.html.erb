@@ -32,11 +32,11 @@
     <tbody>
       <% @users.each do |user| %>
       <tr>
-        <td class="col-1"><%= user.id %></td>
-        <td class="col-4"><%= user.full_name %></td>
-        <td class="col-3"><%= l user.created_at %></td>
-        <td class="col-3"><%= l user.updated_at %></td>
-        <td class="col-1">
+        <td class="align-middle col-1"><%= user.id %></td>
+        <td class="align-middle col-4"><%= user.full_name %></td>
+        <td class="align-middle col-3"><%= l user.created_at %></td>
+        <td class="align-middle col-3"><%= l user.updated_at %></td>
+        <td class="align-middle col-1">
           <%= link_to edit_admins_user_path(user), class: 'btn btn-success' do %>
             <i class="bi bi-pencil-square"></i>
           <% end %>
