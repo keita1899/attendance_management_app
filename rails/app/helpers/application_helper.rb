@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def page_title(title)
+    base_title = "勤怠管理"
+
+    title.empty? ? base_title : "#{title} | #{base_title}"
+  end
+
   def flash_class(key)
     case key
     when "notice" then "alert-success"
