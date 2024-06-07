@@ -79,7 +79,6 @@ RSpec.describe "Admins::Users", type: :system do
 
     context "ログイン済みの場合" do
       let!(:user) { create(:user) }
-      let!(:wage) { FactoryBot.create(:wage, user:) }
 
       before do
         sign_in admin
@@ -120,6 +119,27 @@ RSpec.describe "Admins::Users", type: :system do
         visit edit_admins_user_path(1)
         expect(page).to have_current_path(new_admin_session_path)
       end
+    end
+  end
+
+  describe "ユーザー削除" do
+    let!(:admin) { create(:admin, name: "admin", password: "password") }
+    let!(:users) { create_list(:user, 100) }
+
+    before do
+      sign_in admin
+    end
+
+    it "削除ボタンをクリックして確認ダイアログで削除をクリックするとユーザーの削除が成功する", js: true do
+      visit edit_admins_user_path(users.first)
+      expect(page).to have_content("削除")
+
+      expect {
+        click_link "削除"
+      }.to change { User.count }.by(-1)
+
+      expect(page).to have_current_path(admins_users_path, ignore_query: true)
+      expect(page).to have_content("ユーザーを削除しました")
     end
   end
 end
