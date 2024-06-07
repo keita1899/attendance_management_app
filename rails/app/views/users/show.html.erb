@@ -1,0 +1,77 @@
+<% content_for(:title, "マイページ") %>
+
+<div class="row d-flex mt-1 justify-content-center mt-5 px-3">
+  <div class="col-md-6">
+    <h2 class="text-center">マイページ</h2>
+    <div class="mt-5">
+      <h3 class="">アカウント情報</h3>
+      <dl  class="mt-4">
+        <div class="d-flex mt-1">
+          <dt class="col-6">姓</dt>
+          <dd class="col-6">
+            <%= @user.last_name %>
+          </dd>
+        </div>
+        <div class="d-flex mt-1">
+          <dt class="col-6">名</dt>
+          <dd class="col-6">
+            <%= @user.first_name %>
+          </dd>
+        </div>
+        <div class="d-flex mt-1">
+          <dt class="col-6">セイ</dt>
+          <dd class="col-6">
+            <%= @user.last_name_kana %>
+          </dd>
+        </div>
+        <div class="d-flex mt-1">
+          <dt class="col-6">メイ</dt>
+          <dd class="col-6">
+            <%= @user.first_name_kana %>
+          </dd>
+        </div>
+        <div class="d-flex mt-1">
+          <dt class="col-6">メールアドレス</dt>
+          <dd class="col-6">
+            <div class="d-flex justify-content-between">
+              <%= @user.email %>
+              <a href="d-block">変更する</a>
+            </div>
+          </dd>
+        </div>
+      </dl>
+    </div>
+    <div class="mt-5">
+      <h3 class="">給与情報</h3>
+      <dl class="mt-4">
+        <div class="d-flex mt-1">
+          <dt class="col-6">平日時給</dt>
+          <dd class="col-2 d-flex justify-content-between">
+            <p class="">
+              <%= @user.wage.weekday_rate %>
+            </p>
+            <p>円</p>
+          </dd>
+        </div>
+        <div class="d-flex mt-1">
+          <dt class="col-6">土日・祝日時給</dt>
+          <dd class="col-2 d-flex justify-content-between">
+            <p class="">
+              <%= @user.wage.weekend_rate %>
+            </p>
+            <p>円</p>
+          </dd>
+        </div>
+        <div class="d-flex mt-1">
+          <dt class="col-6">交通費</dt>
+          <dd class="col-2 d-flex justify-content-between">
+            <p class="">
+              <%= TRANSPORT_COST %>
+            </p>
+            <p>円</p>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>

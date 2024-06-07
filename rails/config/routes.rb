@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     confirmations: "users/confirmations",
   }
 
+  get "mypage", to: "users#show", as: "mypage"
+
   devise_for :admins, controllers: {
     sessions: "admins/sessions",
   }

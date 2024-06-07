@@ -70,9 +70,7 @@ RSpec.describe "Users", type: :system do
       let!(:valid_login_info) { { email: "test@example.com", password: "password" } }
 
       before do
-        visit new_user_session_path
-        fill_in_login_form(valid_login_info)
-        click_button "ログイン"
+        sign_in user
       end
 
       it "アカウント登録ページに遷移しようとするとカレンダーページにリダイレクトされる" do
@@ -119,9 +117,7 @@ RSpec.describe "Users", type: :system do
 
     context "ログイン済みの場合" do
       before do
-        visit new_user_session_path
-        fill_in_login_form(valid_login_info)
-        click_button "ログイン"
+        sign_in user
       end
 
       it "ログインページに遷移しようとするとカレンダーページにリダイレクトされる" do
@@ -135,21 +131,45 @@ RSpec.describe "Users", type: :system do
 
   describe "ログアウト" do
     let!(:user) { create(:user, email: "test@example.com", password: "password") }
-    let!(:valid_login_info) { { email: "test@example.com", password: "password" } }
 
     before do
-      visit new_user_session_path
-      fill_in_login_form(valid_login_info)
-      click_button "ログイン"
+      sign_in user
     end
 
     it "ログアウトが成功する" do
+      visit root_path
       click_link "ログアウト"
       expect(page).to have_content("ログアウトしました")
       expect(page).to have_current_path(new_user_session_path)
       expect(page).to have_link("ログイン")
       expect(page).to have_link("アカウント登録")
       expect(page).not_to have_link("ログアウト")
+    end
+  end
+
+  describe "マイページ" do
+    context "未ログインの場合" do
+      it "マイページにアクセスしようとするとログインページにリダイレクトされる" do
+        visit mypage_path
+
+        expect(page).to have_current_path(new_user_session_path)
+      end
+    end
+
+    context "ログイン済みの場合" do
+      let!(:user) { create(:user, email: "test@example.com", password: "password") }
+      let!(:wage) { create(:wage, user:) }
+
+      before do
+        sign_in user
+      end
+
+      it "マイページへのアクセスが成功する" do
+        visit mypage_path
+        expect(page).to have_title("マイページ")
+        expect(page).to have_content("アカウント情報")
+        expect(page).to have_content("給与情報")
+      end
     end
   end
 end
