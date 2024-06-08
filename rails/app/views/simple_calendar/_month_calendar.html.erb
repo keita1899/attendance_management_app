@@ -1,19 +1,22 @@
 <div class="simple-calendar">
-  <div class="calendar-heading">
-    <time datetime="<%= start_date.strftime('%Y-%m') %>" class="calendar-title"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></time>
-
-    <nav>
-      <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view %>
-      <%= link_to t('simple_calendar.today', default: 'Today'), calendar.url_for_today_view %>
-      <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view %>
+  <div class="calendar-heading text-center">
+    <nav class="fw-bold fs-4">
+      <%= start_date.year %>年
+      <div class="fs-3">
+        <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view %>
+        <time datetime="<%= start_date.strftime('%Y-%m') %>" class="calendar-title">
+          <%= t('date.month_names')[start_date.month] %>
+        </time>
+        <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view %>
+      </div>
     </nav>
   </div>
 
-  <table class="table table-striped">
+  <table class="table mt-3">
     <thead>
       <tr>
         <% date_range.slice(0, 7).each do |day| %>
-          <th><%= t('date.abbr_day_names')[day.wday] %></th>
+          <th class="bg-black text-white"><%= t('date.abbr_day_names')[day.wday] %></th>
         <% end %>
       </tr>
     </thead>
