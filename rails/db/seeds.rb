@@ -9,8 +9,8 @@
     password_confirmation: "password",
   )
   user.create_wage(
-    weekday_rate: 1000,
-    weekend_rate: 1100,
+    weekday_hourly_wage: 1000,
+    weekend_hourly_wage: 1100,
   )
 end
 

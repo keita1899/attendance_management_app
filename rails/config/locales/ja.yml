@@ -9,8 +9,8 @@ ja:
           has_many: "%{record}が存在しているので削除できません"
     attributes:
       wage:
-        weekday_rate: '平日時給'
-        weekend_rate: '土日・祝日時給'
+        weekday_hourly_wage: '平日時給'
+        weekend_hourly_wage: '土日・祝日時給'
   date:
     abbr_day_names:
     - 日

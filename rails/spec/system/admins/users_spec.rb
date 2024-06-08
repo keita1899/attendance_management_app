@@ -88,8 +88,8 @@ RSpec.describe "Admins::Users", type: :system do
         visit edit_admins_user_path(user)
         expect(page).to have_content("平日時給")
         expect(page).to have_content("土日・祝日時給")
-        expect(page).to have_field("wage_weekday_rate", with: 1000)
-        expect(page).to have_field("wage_weekend_rate", with: 1100)
+        expect(page).to have_field("wage_weekday_hourly_wage", with: 1000)
+        expect(page).to have_field("wage_weekend_hourly_wage", with: 1100)
       end
 
       it "ユーザー情報の更新が成功する" do

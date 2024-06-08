@@ -13,39 +13,39 @@ RSpec.describe Wage, type: :model do
 
     context "失敗する場合" do
       it "平日時給が空だと保存できない" do
-        wage.weekday_rate = nil
+        wage.weekday_hourly_wage = nil
         expect(wage).not_to be_valid
-        expect(wage.errors[:weekday_rate]).to include("を入力してください")
+        expect(wage.errors[:weekday_hourly_wage]).to include("を入力してください")
       end
 
       it "土日・祝日時給が空だと保存できない" do
-        wage.weekend_rate = nil
+        wage.weekend_hourly_wage = nil
         expect(wage).not_to be_valid
-        expect(wage.errors[:weekend_rate]).to include("を入力してください")
+        expect(wage.errors[:weekend_hourly_wage]).to include("を入力してください")
       end
 
       it "平日時給が文字列だと保存できない" do
-        wage.weekday_rate = "test"
+        wage.weekday_hourly_wage = "test"
         expect(wage).not_to be_valid
-        expect(wage.errors[:weekday_rate]).to include("は数値で入力してください")
+        expect(wage.errors[:weekday_hourly_wage]).to include("は数値で入力してください")
       end
 
       it "土日・祝日時給が文字列だと保存できない" do
-        wage.weekend_rate = "test"
+        wage.weekend_hourly_wage = "test"
         expect(wage).not_to be_valid
-        expect(wage.errors[:weekend_rate]).to include("は数値で入力してください")
+        expect(wage.errors[:weekend_hourly_wage]).to include("は数値で入力してください")
       end
 
       it "平日時給が0より小さいと保存できない" do
-        wage.weekday_rate = -1
+        wage.weekday_hourly_wage = -1
         expect(wage).not_to be_valid
-        expect(wage.errors[:weekday_rate]).to include("は0以上の値にしてください")
+        expect(wage.errors[:weekday_hourly_wage]).to include("は0以上の値にしてください")
       end
 
       it "土日・祝日時給が0より小さいと保存できない" do
-        wage.weekend_rate = -1
+        wage.weekend_hourly_wage = -1
         expect(wage).not_to be_valid
-        expect(wage.errors[:weekend_rate]).to include("は0以上の値にしてください")
+        expect(wage.errors[:weekend_hourly_wage]).to include("は0以上の値にしてください")
       end
     end
   end
