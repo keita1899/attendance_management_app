@@ -194,3 +194,6 @@ ja:
       truncate: "&hellip;"
   common:
     save: '保存'
+  simple_calendar:
+    previous: "<<"
+    next: ">>"
