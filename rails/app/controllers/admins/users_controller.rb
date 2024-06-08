@@ -1,7 +1,7 @@
 class Admins::UsersController < Admins::BaseController
   layout "admin"
 
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
     @users = User.page(params[:page]).order("created_at DESC")
@@ -17,6 +17,12 @@ class Admins::UsersController < Admins::BaseController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @user.destroy!
+
+    redirect_to admins_users_path, notice: "ユーザーを削除しました", status: :see_other
   end
 
   private

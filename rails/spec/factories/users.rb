@@ -7,5 +7,9 @@ FactoryBot.define do
     sequence(:email) {|n| "test#{n}@example.com" }
     password { "password" }
     password_confirmation { "password" }
+
+    after(:create) do |user|
+      create(:wage, user:)
+    end
   end
 end
