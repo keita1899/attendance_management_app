@@ -6,9 +6,6 @@ class AttendancesController < ApplicationController
   end
 
   def show
-    @today = Time.zone.today
-    @day_of_week = %w(日 月 火 水 木 金 土)[@date.wday]
-
     unless @attendance
       @attendance = Attendance.new(user_id: current_user.id, date: @date)
     end
