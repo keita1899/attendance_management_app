@@ -1,13 +1,16 @@
 class AttendanceDecorator < ApplicationDecorator
   delegate_all
 
-  # Define presentation-specific methods here. Helpers are accessed through
-  # `helpers` (aka `h`). You can override attributes, for example:
-  #
-  #   def created_at
-  #     helpers.content_tag :span, class: 'time' do
-  #       object.created_at.strftime("%a %m/%d/%y")
-  #     end
-  #   end
+  def is_today?
+    object.date == Time.zone.today
+  end
 
+  def can_clock_in?
+    current_time = Time.current
+    current_time >= Time.current.change(hour: 9, min: 30) && !object.clock_in_time.present?
+  end
+
+  def can_clock_out?
+    object.clock_in_time.present? && !object.clock_out_time.present?
+  end
 end

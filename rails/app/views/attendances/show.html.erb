@@ -1,0 +1,83 @@
+<% content_for(:title, "勤怠管理") %>
+
+<div class="w-50 mx-auto">
+  <div class="text-center">
+    <div class="fs-4">
+      <p><%= @attendance.date.strftime("%Y年%m月%d日") %> <%= @day_of_week %></p>
+    </div>
+    <% if @attendance.decorate.is_today? %>
+      <div class="clock fs-1"></div>
+      <div class="d-flex justify-content-around mt-3">
+        <%= button_to "出勤", clock_in_attendances_path(date: @date), method: :post, class: 'btn btn-lg btn-success', disabled: !@attendance.decorate.can_clock_in? %>
+        <%= button_to "退勤", clock_out_attendances_path(date: @date), method: :post, class: 'btn btn-lg btn-danger', disabled: !@attendance.decorate.can_clock_out? %>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="mt-5">
+    <dl class="">
+      <div class="d-flex">
+        <dt class="col-6">出勤時間</dt>
+        <dd class="col-6"><%= format_time_only(@attendance.clock_in_time) %></dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-6">退勤時間</dt>
+        <dd class="col-6"><%= format_time_only(@attendance.clock_out_time) %></dd>
+      </div>
+    </dl>
+    <dl class="">
+      <div class="d-flex">
+        <dt class="col-6">勤務時間</dt>
+        <dd class="col-6"><%= convert_minutes_to_hour(@attendance.working_minutes) %></dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-6">残業時間</dt>
+        <dd class="col-6"><%= convert_minutes_to_hour(@attendance.overtime_minutes) %></dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-6">総勤務時間</dt>
+        <dd class="col-6"><%= convert_minutes_to_hour(@attendance.total_working_minutes) %></dd>
+      </div>
+    </dl>
+    <dl class="">
+      <div class="d-flex">
+        <dt class="col-6">時給</dt>
+        <dd class="col-6">
+          <%= number_to_currency(@attendance.hourly_wage) %>
+        </dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-6">支給額</dt>
+        <dd class="col-6">
+          <%= number_to_currency(@attendance.daily_wage) %>
+        </dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-6">残業代</dt>
+        <dd class="col-6">
+          <%= number_to_currency(@attendance.overtime_pay) %>
+        </dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-6">交通費</dt>
+        <dd class="col-6">
+          <%= number_to_currency(TRANSPORT_COST) %>
+        </dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-6">特別日手当</dt>
+        <dd class="col-6">
+          <%= number_to_currency(@attendance.allowance) %>
+        </dd>
+      </div>
+    </dl>
+    <dl class="">
+      <div class="d-flex">
+        <dt class="col-6">総支給額</dt>
+        <dd class="col-6">
+          <%= number_to_currency(@attendance.total_payment) %>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
