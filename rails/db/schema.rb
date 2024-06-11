@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_11_042441) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_11_050557) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,6 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_11_042441) do
     t.datetime "updated_at", null: false
     t.integer "total_working_minutes", default: 0, null: false
     t.integer "daily_wage", default: 0, null: false
+    t.integer "overtime_pay", default: 0, null: false
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
