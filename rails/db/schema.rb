@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_03_054915) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_17_011533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,26 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_03_054915) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_admins_on_name", unique: true
+  end
+
+  create_table "attendances", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.date "date", null: false
+    t.time "clock_in_time"
+    t.time "clock_out_time"
+    t.integer "working_minutes", default: 0, null: false
+    t.integer "overtime_minutes", default: 0, null: false
+    t.integer "hourly_wage", default: 0, null: false
+    t.integer "transport_cost", default: 0, null: false
+    t.integer "allowance", default: 0, null: false
+    t.integer "total_payment", default: 0, null: false
+    t.boolean "special_day", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "total_working_minutes", default: 0, null: false
+    t.integer "daily_wage", default: 0, null: false
+    t.integer "overtime_pay", default: 0, null: false
+    t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -40,12 +60,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_03_054915) do
 
   create_table "wages", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.integer "weekday_rate", default: 0, null: false
-    t.integer "weekend_rate", default: 0, null: false
+    t.integer "weekday_hourly_wage", default: 0, null: false
+    t.integer "weekend_hourly_wage", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_wages_on_user_id"
   end
 
+  add_foreign_key "attendances", "users"
   add_foreign_key "wages", "users"
 end

@@ -32,6 +32,6 @@ class Admins::UsersController < Admins::BaseController
     end
 
     def wage_params
-      params.require(:wage).permit(:weekday_rate, :weekend_rate)
+      params.require(:wage).permit(:weekday_hourly_wage, :weekend_hourly_wage)
     end
 end

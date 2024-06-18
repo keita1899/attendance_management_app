@@ -28,4 +28,18 @@ module ApplicationHelper
       link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link"
     end
   end
+
+  def format_time_only(time)
+    time.strftime("%H:%M") if time.present?
+  end
+
+  def convert_minutes_to_hour(minutes)
+    hours = minutes / 60
+    minutes %= 60
+    (hours < 1) ? "#{minutes}分" : "#{hours}時間 #{minutes}分"
+  end
+
+  def number_to_currency(price)
+    "#{price.to_formatted_s(:delimited, delimiter: ",")}円"
+  end
 end

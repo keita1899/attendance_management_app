@@ -6,6 +6,14 @@ Rails.application.routes.draw do
     confirmations: "users/confirmations",
   }
 
+  resources :attendances, only: [:index, :new] do
+    collection do
+      get ":date", to: "attendances#show", as: "date"
+      post "clock_in/:date", to: "attendances#clock_in", as: "clock_in"
+      post "clock_out/:date", to: "attendances#clock_out", as: "clock_out"
+    end
+  end
+
   get "mypage", to: "users#show", as: "mypage"
 
   devise_for :admins, controllers: {
@@ -17,5 +25,5 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :edit, :update, :destroy]
   end
 
-  root "calendars#index"
+  root to: "attendances#index"
 end

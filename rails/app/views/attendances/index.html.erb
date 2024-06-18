@@ -1,7 +1,9 @@
 <% content_for(:title, "カレンダー") %>
 
 <%= month_calendar do |date| %>
-  <%= date.day %>
+  <%= link_to date_attendances_path(date: date), class: "calendar-link #{'attended' if @attended_dates.include?(date)} " do %>
+    <%= date.day %>
+  <% end %>
 <% end %>
 
 <div class="mt-5 w-50 mx-auto">
