@@ -25,5 +25,5 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :edit, :update, :destroy]
   end
 
-  root "calendars#index"
+  root to: "attendances#index"
 end
