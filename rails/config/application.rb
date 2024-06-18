@@ -45,5 +45,7 @@ module Myapp
                        routing_specs: false,
                        request_specs: false
     end
+
+    config.exceptions_app = self.routes
   end
 end
