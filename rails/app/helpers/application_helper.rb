@@ -35,11 +35,11 @@ module ApplicationHelper
 
   def convert_minutes_to_hour(minutes)
     hours = minutes / 60
-    minutes = minutes % 60
-    hours < 1 ? "#{minutes}分" : "#{hours}時間 #{minutes}分"
+    minutes %= 60
+    (hours < 1) ? "#{minutes}分" : "#{hours}時間 #{minutes}分"
   end
 
   def number_to_currency(price)
-    "#{price.to_formatted_s(:delimited, delimiter: ',')}円"
+    "#{price.to_formatted_s(:delimited, delimiter: ",")}円"
   end
 end

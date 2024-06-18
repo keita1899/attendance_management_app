@@ -14,9 +14,9 @@
   )
 
   user.create_attendance(
-    date: Date.today,
-    clock_in_time: Time.now.beginning_of_day + 10.hours,
-    clock_out_time: Time.now.beginning_of_day + 14.hours,
+    date: Time.zone.today,
+    clock_in_time: Time.zone.now.beginning_of_day + 10.hours,
+    clock_out_time: Time.zone.now.beginning_of_day + 14.hours,
     working_minutes: 240,
     overtime_minutes: 0,
     total_working_minutes: 240,

@@ -5,7 +5,7 @@
     <div class="fs-4">
       <p><%= @attendance.date.strftime("%Y年%m月%d日") %> <%= @attendance.decorate.day_of_week(@date) %></p>
     </div>
-    <% if @attendance.decorate.is_today? %>
+    <% if @attendance.decorate.today? %>
       <div class="clock fs-1"></div>
       <div class="d-flex justify-content-around mt-3">
         <%= button_to "出勤", clock_in_attendances_path(date: @date), method: :post, class: 'btn btn-lg btn-success', disabled: !@attendance.decorate.can_clock_in? %>
