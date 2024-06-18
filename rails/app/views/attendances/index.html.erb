@@ -1,7 +1,7 @@
 <% content_for(:title, "カレンダー") %>
 
 <%= month_calendar do |date| %>
-  <%= link_to date_attendances_path(date: date), class: 'calendar-link' do %>
+  <%= link_to date_attendances_path(date: date), class: "calendar-link #{'attended' if @attended_dates.include?(date)} " do %>
     <%= date.day %>
   <% end %>
 <% end %>

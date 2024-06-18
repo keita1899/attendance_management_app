@@ -1,4 +1,7 @@
 .simple-calendar {
+  td {
+    padding: 0;
+  }
   .today {
     background: #ddd;
   }
@@ -16,4 +19,9 @@
   width: 100%;
   height: 100%;
   color: inherit;
+  padding: 6px;
+
+  &.attended {
+    background-color: rgb(141, 239, 141);
+  }
 }

@@ -3,6 +3,7 @@ class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :clock_in, :clock_out]
 
   def index
+    @attended_dates = current_user.attendances.pluck(:date).map(&:to_date).uniq
   end
 
   def show
