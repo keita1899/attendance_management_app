@@ -35,10 +35,28 @@ RSpec.describe "Attendances", type: :system do
       end
 
       context "日付が今日の場合" do
-        it "勤怠詳細ページが表示される" do
-          expect(page).to have_button "出勤"
-          expect(page).to have_button "退勤", disabled: true
-          expect(page).to have_title("勤怠管理")
+        context "既に勤怠記録がある場合" do
+          let!(:attendance) { create(:attendance, user:, date: Date.current, clock_in_time: "10:00", clock_out_time: "14:00") }
+
+          it "既存の勤怠記録を表示し、データベースに存在することを確認する" do
+            expect(page).to have_button "出勤", disabled: true
+            expect(page).to have_button "退勤", disabled: true
+            expect(page).to have_content(attendance.clock_in_time.strftime("%H:%M"))
+            expect(page).to have_content(attendance.clock_out_time.strftime("%H:%M"))
+
+            expect(Attendance).to exist(user:, date: Date.current)
+          end
+        end
+
+        context "勤怠記録がない場合" do
+          it "新しい勤怠記録をインスタンス化し、データベースに存在しないことを確認する" do
+            expect(page).to have_button "出勤"
+            expect(page).to have_button "退勤", disabled: true
+            expect(page).not_to have_content(attendance.clock_in_time.strftime("%H:%M"))
+            expect(page).not_to have_content(attendance.clock_out_time.strftime("%H:%M"))
+
+            expect(Attendance).not_to exist(user:, date: Date.current)
+          end
         end
       end
 
@@ -48,10 +66,28 @@ RSpec.describe "Attendances", type: :system do
           visit date_attendances_path(attendance.date)
         end
 
-        it "勤怠詳細ページが表示されるが、出勤・退勤ボタンが表示されない" do
-          expect(page).not_to have_button "出勤"
-          expect(page).not_to have_button "退勤"
-          expect(page).to have_title("勤怠管理")
+        context "既に勤怠記録がある場合" do
+          it "既存の勤怠記録を表示し、データベースに存在することを確認する" do
+            expect(page).not_to have_button "出勤"
+            expect(page).not_to have_button "退勤"
+            expect(page).to have_content(attendance.clock_in_time.strftime("%H:%M"))
+            expect(page).to have_content(attendance.clock_out_time.strftime("%H:%M"))
+
+            expect(Attendance).to exist(user:)
+          end
+        end
+
+        context "勤怠記録がない場合" do
+          let!(:attendance) { build(:attendance, user:) }
+
+          it "新しい勤怠記録をインスタンス化し、データベースに存在しないことを確認する" do
+            expect(page).not_to have_button "出勤"
+            expect(page).not_to have_button "退勤"
+            expect(page).not_to have_content(attendance.clock_in_time.strftime("%H:%M"))
+            expect(page).not_to have_content(attendance.clock_out_time.strftime("%H:%M"))
+
+            expect(Attendance).not_to exist(user:)
+          end
         end
       end
     end

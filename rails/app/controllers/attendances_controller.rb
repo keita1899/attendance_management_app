@@ -6,11 +6,6 @@ class AttendancesController < ApplicationController
   end
 
   def show
-    unless @attendance
-      @attendance = Attendance.new(user_id: current_user.id, date: @date)
-    end
-
-    render "show"
   end
 
   def clock_in
@@ -35,6 +30,6 @@ class AttendancesController < ApplicationController
 
     def set_attendance
       @date = Date.parse(params[:date])
-      @attendance = Attendance.find_by(user_id: current_user.id, date: @date)
+      @attendance = Attendance.find_or_initialize_by(user_id: current_user.id, date: @date)
     end
 end
