@@ -43,13 +43,13 @@ class Attendance < ApplicationRecord
   end
 
   def calculate_daily_wage
-    hourly_wage * convert_minutes_to_hour(GUARANTEED_WAGE_MINUTES)
+    set_hourly_wage * convert_minutes_to_hour(GUARANTEED_WAGE_MINUTES)
   end
 
   def calculate_overtime_pay
     overtime_minutes = calculate_overtime_minutes
-    half_hourly_wage = hourly_wage / 2
-    overtime_minutes > OVERTIME_INTERVAL_MINUTES ? (overtime_minutes / OVERTIME_INTERVAL_MINUTES) * half_hourly_wage : 0
+    half_hourly_wage = set_hourly_wage / 2
+    overtime_minutes >= OVERTIME_INTERVAL_MINUTES ? (overtime_minutes / OVERTIME_INTERVAL_MINUTES) * half_hourly_wage : 0
   end
 
   def calculate_daily_total_payment
