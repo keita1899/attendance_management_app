@@ -13,9 +13,11 @@
                 <%= username %>
               </span>
             </li>
-            <li class="nav-item">
-              <%= link_to "マイページ", mypage_path, class: "nav-link" %>
-            </li>
+            <% if !admin_signed_in? %>
+              <li class="nav-item">
+                <%= link_to "マイページ", mypage_path, class: "nav-link" %>
+              </li>
+            <% end %>
             <li class="nav-item">
               <%= logout_link %>
             </li>
