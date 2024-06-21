@@ -33,6 +33,10 @@ module ApplicationHelper
     time.strftime("%H:%M") if time.present?
   end
 
+  def format_date(date)
+    date.to_date.strftime("%-m/%-d")
+  end
+
   def convert_minutes_to_hour(minutes)
     hours = minutes / 60
     minutes %= 60

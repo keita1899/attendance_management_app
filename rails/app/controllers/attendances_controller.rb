@@ -3,7 +3,10 @@ class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :clock_in, :clock_out]
 
   def index
-    @attended_dates = current_user.attendances.pluck(:date).map(&:to_date).uniq
+    @attended_dates = current_user.attended_dates
+    target_month = AttendanceSummaryService.calculate_target_month(params[:start_date])
+    @attendance_summary = AttendanceSummaryService.new(current_user, target_month)
+    @start_date, @end_date = @attendance_summary.pay_period
   end
 
   def show
