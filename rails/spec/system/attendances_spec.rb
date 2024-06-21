@@ -8,6 +8,16 @@ RSpec.describe "Attendances", type: :system do
   let!(:user) { create(:user) }
   let!(:attendance) { create(:attendance, user:) }
 
+  def create_weekday_attendance(user)
+    create(:attendance, user:, date: start_date + 1.day, working_minutes: 240, overtime_minutes: 0, daily_wage: 4000, overtime_pay: 0) # 2024-04-22 (月曜日)
+    create(:attendance, user:, date: start_date + 2.days, working_minutes: 240, overtime_minutes: 60, daily_wage: 4000, overtime_pay: 1000) # 2024-04-23 (火曜日)
+  end
+
+  def create_weekend_attendance(user)
+    create(:attendance, user:, date: start_date + 6.days, working_minutes: 240, overtime_minutes: 0, daily_wage: 4400, overtime_pay: 0) # 2024-04-27 (土曜日)
+    create(:attendance, user:, date: start_date + 7.days, working_minutes: 240, overtime_minutes: 60, daily_wage: 4400, overtime_pay: 1100) # 2024-04-28 (日曜日)
+  end
+
   describe "カレンダーページ表示" do
     context "未ログインの場合" do
       it "ログイン画面にリダイレクトされる" do
@@ -18,11 +28,61 @@ RSpec.describe "Attendances", type: :system do
     end
 
     context "ログインしている場合" do
-      it "カレンダーページが表示される" do
+      let!(:target_month) { Date.new(2024, 5, 1) }
+      let!(:start_date) { Date.new(2024, 4, 21) }
+      let!(:end_date) { Date.new(2024, 5, 20) }
+      let!(:transport_cost) { 320 }
+
+      before do
+        create_weekday_attendance(user)
+        create_weekend_attendance(user)
         sign_in user
 
-        visit attendances_path
+        visit attendances_path(start_date: target_month)
+      end
+
+      it "5月のカレンダーページが表示される" do
+        expect(page).to have_content("4/21 ~ 5/20")
         expect(page).to have_title("カレンダー")
+      end
+
+      it "合計勤務日数が表示される" do
+        expect(page).to have_content("勤務日数")
+        expect(page).to have_content("平日勤務日数 2日")
+        expect(page).to have_content("土日・祝日勤務日数 2日")
+        expect(page).to have_content("合計勤務日数 4日")
+      end
+
+      it "合計勤務時間が表示される" do
+        expect(page).to have_content("勤務時間")
+        expect(page).to have_content("平日勤務時間 8時間 0分")
+        expect(page).to have_content("土日・祝日勤務時間 8時間 0分")
+        expect(page).to have_content("合計勤務時間 16時間 0分")
+      end
+
+      it "合計残業時間が表示される" do
+        expect(page).to have_content("残業時間")
+        expect(page).to have_content("平日残業時間 1時間 0分")
+        expect(page).to have_content("土日・祝日残業時間 1時間 0分")
+        expect(page).to have_content("合計残業時間 2時間 0分")
+      end
+
+      it "合計基本給が表示される" do
+        expect(page).to have_content("基本給")
+        expect(page).to have_content("平日基本給 8,000円")
+        expect(page).to have_content("土日・祝日基本給 8,800円")
+        expect(page).to have_content("合計基本給 16,800円")
+      end
+
+      it "合計残業代が表示される" do
+        expect(page).to have_content("残業代")
+        expect(page).to have_content("平日残業代 1,000円")
+        expect(page).to have_content("土日・祝日残業代 1,100円")
+        expect(page).to have_content("合計残業代 2,100円")
+      end
+
+      it "総支給額が表示される" do
+        expect(page).to have_content("総支給額 20,180円")
       end
     end
   end
