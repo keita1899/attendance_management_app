@@ -17,4 +17,8 @@ class User < ApplicationRecord
   def full_name
     last_name + first_name
   end
+
+  def attended_dates
+    attendances.where.not(clock_out_time: nil).pluck(:date).map(&:to_date).uniq
+  end
 end

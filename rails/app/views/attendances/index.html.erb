@@ -7,76 +7,107 @@
 <% end %>
 
 <div class="mt-5 w-50 mx-auto">
+  <div class="mt-4 fs-3 fw-bold">
+    <%= format_date(@start_date) %>
+    ~
+    <%= format_date(@end_date) %>
+  </div>
+
   <dl class="mt-4">
     <h3>勤務日数</h3>
     <div class="d-flex">
       <dt class="col-8">平日勤務日数</dt>
-      <dd class="col-4">4日</dd>
+      <dd class="col-4"><%= @attendance_summary.total_monthly_working_weekdays %>日</dd>
     </div>
     <div class="d-flex">
       <dt class="col-8">土日・祝日勤務日数</dt>
-      <dd class="col-4">4日</dd>
+      <dd class="col-4"><%= @attendance_summary.total_monthly_working_weekends %>日</dd>
     </div>
     <div class="d-flex">
-      <dt class="col-8">総勤務日数</dt>
-      <dd class="col-4">4日</dd>
+      <dt class="col-8">合計勤務日数</dt>
+      <dd class="col-4"><%= @attendance_summary.total_monthly_working_days %>日</dd>
     </div>
   </dl>
   <dl class="mt-4">
     <h3>勤務時間</h3>
     <div class="d-flex">
       <dt class="col-8">平日勤務時間</dt>
-      <dd class="col-4">16時間</dd>
+      <dd class="col-4"><%= convert_minutes_to_hour(@attendance_summary.total_monthly_weekday_working_minutes) %></dd>
     </div>
     <div class="d-flex">
       <dt class="col-8">土日・祝日勤務時間</dt>
-      <dd class="col-4">16時間</dd>
+      <dd class="col-4"><%= convert_minutes_to_hour(@attendance_summary.total_monthly_weekend_working_minutes) %></dd>
     </div>
     <div class="d-flex">
       <dt class="col-8">合計勤務時間</dt>
-      <dd class="col-4">16時間</dd>
+      <dd class="col-4"><%= convert_minutes_to_hour(@attendance_summary.total_monthly_working_minutes) %></dd>
     </div>
   </dl>
   <dl class="mt-4">
     <h3>残業時間</h3>
     <div class="d-flex">
       <dt class="col-8">平日残業時間</dt>
-      <dd class="col-4">16時間</dd>
+      <dd class="col-4"><%= convert_minutes_to_hour(@attendance_summary.total_monthly_weekday_overtime_minutes) %></dd>
     </div>
     <div class="d-flex">
       <dt class="col-8">土日・祝日残業時間</dt>
-      <dd class="col-4">16時間</dd>
+      <dd class="col-4"><%= convert_minutes_to_hour(@attendance_summary.total_monthly_weekend_overtime_minutes) %></dd>
     </div>
     <div class="d-flex">
       <dt class="col-8">合計残業時間</dt>
-      <dd class="col-4">16時間</dd>
+      <dd class="col-4"><%= convert_minutes_to_hour(@attendance_summary.total_monthly_overtime_minutes) %></dd>
     </div>
   </dl>
   <dl class="mt-4">
-    <h3>支給額</h3>
-    <div class="d-flex">
-      <dt class="col-8">平日支給額</dt>
-      <dd class="col-4">16000円</dd>
+    <h3>基本給</h3>
+    <div class="mt-2">
+      <div class="d-flex">
+        <dt class="col-8">平日基本給</dt>
+        <dd class="col-4"><%= number_to_currency(@attendance_summary.total_monthly_weekday_daily_wage) %></dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-8">土日・祝日基本給</dt>
+        <dd class="col-4"><%= number_to_currency(@attendance_summary.total_monthly_weekend_daily_wage) %></dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-8">合計基本給</dt>
+        <dd class="col-4"><%= number_to_currency(@attendance_summary.total_monthly_daily_wage) %></dd>
+      </div>
     </div>
-    <div class="d-flex">
-      <dt class="col-8">土日・祝日支給額</dt>
-      <dd class="col-4">16000円</dd>
+    <div class="mt-4">
+      <h3>残業代</h3>
+      <div class="d-flex">
+        <dt class="col-8">平日残業代</dt>
+        <dd class="col-4"><%= number_to_currency(@attendance_summary.total_monthly_weekday_overtime_pay) %></dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-8">土日・祝日残業代</dt>
+        <dd class="col-4"><%= number_to_currency(@attendance_summary.total_monthly_weekend_overtime_pay) %></dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-8">合計残業代</dt>
+        <dd class="col-4"><%= number_to_currency(@attendance_summary.total_monthly_overtime_pay) %></dd>
+      </div>
     </div>
-    <div class="d-flex">
-      <dt class="col-8">特別日支給額</dt>
-      <dd class="col-4">0円</dd>
+    <div class="mt-4">
+      <div class="d-flex">
+        <dt class="col-8">特別日支給額</dt>
+        <dd class="col-4"></dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-8">特別日手当</dt>
+        <dd class="col-4"></dd>
+      </div>
+      <div class="d-flex">
+        <dt class="col-8">交通費</dt>
+        <dd class="col-4"><%= number_to_currency(@attendance_summary.total_monthly_transport_cost) %></dd>
+      </div>
     </div>
-    <div class="d-flex">
-      <dt class="col-8">特別日手当</dt>
-      <dd class="col-4">0円</dd>
-    </div>
-    <div class="d-flex">
-      <dt class="col-8">交通費</dt>
-      <dd class="col-4">300円</dd>
-    </div>
-    <div class="d-flex">
-      <dt class="col-8">総支給額</dt>
-      <dd class="col-4">36800円</dd>
+    <div class="mt-4">
+      <div class="d-flex">
+        <dt class="col-8">総支給額</dt>
+        <dd class="col-4"><%= number_to_currency(@attendance_summary.total_monthly_payment) %></dd>
+      </div>
     </div>
   </dl>
 </div>
