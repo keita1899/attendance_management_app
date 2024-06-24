@@ -2,6 +2,7 @@ class Admins::SpecialDaysController < Admins::BaseController
   layout "admin"
 
   def index
+    @special_days = SpecialDay.page(params[:page]).order("created_at DESC")
   end
 
   def new
