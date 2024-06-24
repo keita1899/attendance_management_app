@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :special_day do
-    start_date { Time.zone.local(2024, 8, 13) }
-    end_date { Time.zone.local(2024, 8, 16) }
-    description { "お盆" }
+    sequence(:start_date) {|n| Time.zone.local(2024, 1, 1) + (n - 1) * 2.days }
+    sequence(:end_date) {|n| Time.zone.local(2024, 1, 2) + (n - 1) * 2.days }
+    sequence(:description) {|n| "Special Day #{n}" }
     wage_increment { 100 }
     allowance { 1500 }
   end

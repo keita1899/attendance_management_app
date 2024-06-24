@@ -65,4 +65,79 @@ RSpec.describe "SpecialDays", type: :system do
       end
     end
   end
+
+  describe "特別日一覧" do
+    context "管理ユーザーでログイン済みの場合" do
+      let!(:special_days) { create_list(:special_day, 100) }
+
+      before do
+        sign_in admin
+        visit admins_special_days_path
+      end
+
+      it "特別日一覧画面にアクセスが成功する" do
+        expect(page).to have_title("特別日一覧")
+      end
+
+      it "作成日が新しい順で特別日が表示される" do
+        expect(page).to have_content("100")
+        expect(page).to have_content("99")
+        expect(page).to have_content("100 件中 0 〜 10 件")
+      end
+
+      it "2ページ目への移動が成功する" do
+        click_link "2"
+        expect(page).to have_current_path(admins_special_days_path(page: 2))
+        expect(page).to have_content("100 件中 10 〜 20 件")
+      end
+
+      it "次のページへの移動が成功する" do
+        visit admins_special_days_path
+        click_link "›"
+        expect(page).to have_current_path(admins_special_days_path(page: 2))
+        expect(page).to have_content("100 件中 10 〜 20 件")
+      end
+
+      it "最後のページへの移動が成功する" do
+        visit admins_special_days_path
+        click_link "»"
+        expect(page).to have_current_path(admins_special_days_path(page: 10))
+        expect(page).to have_content("100 件中 90 〜 100 件")
+      end
+
+      it "前のページへの移動が成功する" do
+        visit admins_special_days_path(page: 2)
+        click_link "‹"
+        expect(page).to have_current_path(admins_special_days_path)
+        expect(page).to have_content("100 件中 0 〜 10 件")
+      end
+
+      it "最初のページへの移動が成功する" do
+        visit admins_special_days_path(page: 10)
+        click_link "«"
+        expect(page).to have_current_path(admins_special_days_path)
+        expect(page).to have_content("100 件中 0 〜 10 件")
+      end
+    end
+
+    context "管理ユーザーで未ログインの場合" do
+      it "特別日一覧画面へのアクセスが失敗し、管理ログイン画面にリダイレクトされる" do
+        visit admins_special_days_path
+
+        expect(page).to have_current_path(new_admin_session_path)
+      end
+    end
+
+    context "一般ユーザーが特別日一覧画面にアクセスした場合" do
+      before do
+        sign_in user
+      end
+
+      it "アクセスが失敗し、管理ログイン画面にリダイレクトされる" do
+        visit admins_special_days_path
+
+        expect(page).to have_current_path(new_admin_session_path)
+      end
+    end
+  end
 end
