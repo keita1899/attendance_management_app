@@ -11,6 +11,12 @@ ja:
       wage:
         weekday_hourly_wage: '平日時給'
         weekend_hourly_wage: '土日・祝日時給'
+      special_day:
+        start_date: 開始日
+        end_date: 終了日
+        description: 説明
+        wage_increment: 時給増加額
+        allowance: 手当
   date:
     abbr_day_names:
     - 日
