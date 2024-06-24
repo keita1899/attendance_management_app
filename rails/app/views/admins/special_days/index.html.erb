@@ -1,0 +1,43 @@
+<% content_for(:title, "特別日一覧") %>
+
+<div class="col-md-10 mx-auto">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2 class="fw-bold">特別日</h2>
+    <div class="">
+      <span class="fs-2 fw-bold">
+      </span>
+      件中
+      <span class="fs-2 fw-bold">
+      </span>
+      〜
+      <span class="fs-2 fw-bold">
+      </span>
+      件
+    </div>
+  </div>
+  
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="col-1">No</th>
+        <th class="col-2">開始日</th>
+        <th class="col-2">終了日</th>
+        <th class="col-3">説明</th>
+        <th class="col-2">時給加算額</th>
+        <th class="col-2">手当</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="align-middle col-1"></td>
+        <td class="align-middle col-2"></td>
+        <td class="align-middle col-2"></td>
+        <td class="align-middle col-3"></td>
+        <td class="align-middle col-2"></td>
+        <td class="align-middle col-2"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <%= link_to "特別日を追加する", new_admins_special_day_path %>
+</div>
