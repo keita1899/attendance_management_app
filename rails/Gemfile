@@ -83,7 +83,7 @@ group :development, :test do
 
   gem "launchy"
 
-  gem 'selenium-webdriver'
+  gem "selenium-webdriver"
 end
 
 group :development do
