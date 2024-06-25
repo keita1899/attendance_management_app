@@ -80,6 +80,8 @@ group :development, :test do
   gem "rspec-rails"
 
   gem "faker"
+
+  gem "launchy"
 end
 
 group :development do

@@ -5,12 +5,15 @@
     <h2 class="fw-bold">特別日</h2>
     <div class="">
       <span class="fs-2 fw-bold">
+        <%= @special_days.total_count %>
       </span>
       件中
       <span class="fs-2 fw-bold">
+        <%= @special_days.offset_value %>
       </span>
       〜
       <span class="fs-2 fw-bold">
+        <%= @special_days.offset_value + @special_days.length %>
       </span>
       件
     </div>
@@ -28,16 +31,24 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="align-middle col-1"></td>
-        <td class="align-middle col-2"></td>
-        <td class="align-middle col-2"></td>
-        <td class="align-middle col-3"></td>
-        <td class="align-middle col-2"></td>
-        <td class="align-middle col-2"></td>
-      </tr>
+      <% @special_days.each do |day|%>
+        <tr>
+          <td class="align-middle col-1"><%= day.id %></td>
+          <td class="align-middle col-2"><%= day.start_date %></td>
+          <td class="align-middle col-2"><%= day.end_date %></td>
+          <td class="align-middle col-3"><%= day.description %></td>
+          <td class="align-middle col-2"><%= number_to_currency(day.wage_increment) %></td>
+          <td class="align-middle col-2"><%= number_to_currency(day.allowance) %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 
-  <%= link_to "特別日を追加する", new_admins_special_day_path %>
+  <div class="mt-5 d-flex justify-content-center">
+    <%= paginate @special_days, theme: 'bootstrap-5' %>
+  </div>
+
+  <div class="text-end">
+    <%= link_to "特別日を追加する", new_admins_special_day_path %>
+  </div>
 </div>

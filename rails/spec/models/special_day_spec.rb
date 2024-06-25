@@ -39,12 +39,14 @@ RSpec.describe SpecialDay, type: :model do
     end
 
     it "開始日が終了日より後の日付だと登録できない" do
-      special_day.start_date = Time.zone.local(2024, 8, 17)
+      special_day.start_date = Time.zone.local(2024, 8, 20)
+      special_day.end_date = Time.zone.local(2024, 8, 17)
       expect(special_day).not_to be_valid
       expect(special_day.errors[:start_date]).to include("は終了日より前でなければなりません")
     end
 
     it "終了日が開始日より前の日付だと登録できない" do
+      special_day.start_date = Time.zone.local(2024, 8, 17)
       special_day.end_date = Time.zone.local(2024, 8, 12)
       expect(special_day).not_to be_valid
       expect(special_day.errors[:end_date]).to include("は開始日より後でなければなりません")
