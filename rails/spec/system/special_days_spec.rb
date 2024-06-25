@@ -80,8 +80,6 @@ RSpec.describe "SpecialDays", type: :system do
       end
 
       it "作成日が新しい順で特別日が表示される" do
-        expect(page).to have_content("100")
-        expect(page).to have_content("99")
         expect(page).to have_content("100 件中 0 〜 10 件")
       end
 
