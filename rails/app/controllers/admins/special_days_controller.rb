@@ -18,6 +18,13 @@ class Admins::SpecialDaysController < Admins::BaseController
     end
   end
 
+  def destroy
+    @special_day = SpecialDay.find(params[:id])
+    @special_day.destroy!
+
+    redirect_to admins_special_days_path, notice: "特別日を削除しました", status: :see_other
+  end
+
   private
 
     def special_day_params
