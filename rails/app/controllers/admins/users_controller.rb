@@ -13,7 +13,7 @@ class Admins::UsersController < Admins::BaseController
 
   def update
     if @user.wage.update(wage_params)
-      redirect_to admins_users_path, notice: "ユーザー情報を更新しました"
+      redirect_to admins_users_url, notice: "ユーザー情報を更新しました"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -22,7 +22,7 @@ class Admins::UsersController < Admins::BaseController
   def destroy
     @user.destroy!
 
-    redirect_to admins_users_path, notice: "ユーザーを削除しました", status: :see_other
+    redirect_to admins_users_url, notice: "ユーザーを削除しました", status: :see_other
   end
 
   private
