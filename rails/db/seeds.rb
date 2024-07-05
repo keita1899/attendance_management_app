@@ -37,7 +37,7 @@ Admin.create!(
 SpecialDay.create!(
   start_date: Time.zone.local(2024, 8, 13),
   end_date: Time.zone.local(2024, 8, 18),
-  description: "",
+  description: "お盆",
   wage_increment: 100,
   allowance: 1500,
 )

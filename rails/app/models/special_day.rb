@@ -7,6 +7,12 @@ class SpecialDay < ApplicationRecord
   validate :start_date_before_end_date
   validate :no_overlapping_dates
 
+  def self.in_month(date)
+    start_date = date.beginning_of_month
+    end_date = date.end_of_month
+    where("start_date <= ? AND end_date >= ?", end_date, start_date)
+  end
+
   private
 
     def start_date_before_end_date

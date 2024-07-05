@@ -30,32 +30,4 @@ FactoryBot.define do
       weekend { true }
     end
   end
-
-  trait :clock_out1300 do
-    clock_out_time { date.change(hour: 13, min: 0) }
-  end
-
-  trait :clock_out1401 do
-    clock_out_time { date.change(hour: 14, min: 1) }
-  end
-
-  trait :clock_out1429 do
-    clock_out_time { date.change(hour: 14, min: 29) }
-  end
-
-  trait :clock_out1430 do
-    clock_out_time { date.change(hour: 14, min: 30) }
-  end
-
-  trait :clock_out1431 do
-    clock_out_time { date.change(hour: 14, min: 31) }
-  end
-
-  trait :clock_out1459 do
-    clock_out_time { date.change(hour: 14, min: 59) }
-  end
-
-  trait :clock_out1500 do
-    clock_out_time { date.change(hour: 15, min: 0) }
-  end
 end

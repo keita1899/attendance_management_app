@@ -7,18 +7,14 @@ class AttendancesController < ApplicationController
     target_month = AttendanceSummaryService.calculate_target_month(params[:start_date])
     @attendance_summary = AttendanceSummaryService.new(current_user, target_month)
     @start_date, @end_date = @attendance_summary.pay_period
+    @special_days = SpecialDay.in_month(target_month)
   end
 
   def show
   end
 
   def clock_in
-    if @attendance
-      @attendance.update!(clock_in_time: Time.current)
-    else
-      @attendance = Attendance.new(user_id: current_user.id, date: @date, clock_in_time: Time.current)
-      @attendance.save!
-    end
+    @attendance.update!(clock_in_time: Time.current)
     flash[:notice] = "出勤しました"
     redirect_back(fallback_location: root_path)
   end
