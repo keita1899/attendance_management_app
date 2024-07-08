@@ -7,11 +7,11 @@ class AttendanceDecorator < ApplicationDecorator
 
   def can_clock_in?
     current_time = Time.current
-    current_time >= Time.current.change(hour: 9, min: 30) && object.clock_in_time.blank?
+    current_time >= Time.current.change(hour: 9, min: 30) && object.clock_in_time.nil?
   end
 
   def can_clock_out?
-    object.clock_in_time.present? && object.clock_out_time.blank?
+    object.clock_in_time.present? && object.clock_out_time.nil?
   end
 
   def day_of_week(date)

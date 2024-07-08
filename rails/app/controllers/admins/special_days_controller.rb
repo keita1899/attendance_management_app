@@ -12,7 +12,7 @@ class Admins::SpecialDaysController < Admins::BaseController
   def create
     @special_day = SpecialDay.new(special_day_params)
     if @special_day.save
-      redirect_to admins_special_days_path, notice: "特別日が作成されました"
+      redirect_to admins_special_days_url, notice: "特別日が作成されました"
     else
       render :new, status: :unprocessable_entity
     end
@@ -22,7 +22,7 @@ class Admins::SpecialDaysController < Admins::BaseController
     @special_day = SpecialDay.find(params[:id])
     @special_day.destroy!
 
-    redirect_to admins_special_days_path, notice: "特別日を削除しました", status: :see_other
+    redirect_to admins_special_days_url, notice: "特別日を削除しました", status: :see_other
   end
 
   private

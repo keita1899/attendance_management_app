@@ -4,7 +4,7 @@
   <div class="text-center">
     <div class="fs-4">
       <p><%= @attendance.date.strftime("%Y年%m月%d日") %> <%= @attendance.decorate.day_of_week(@date) %></p>
-      <p><%= @attendance.special_day? ? "（特別日）" : "" %></p>
+      <p><%= @special_day ? "#{@special_day.description}（特別日）" : "" %></p>
     </div>
     <% if @attendance.decorate.today? %>
       <div class="clock fs-1"></div>

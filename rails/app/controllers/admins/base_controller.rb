@@ -5,6 +5,6 @@ class Admins::BaseController < ApplicationController
   private
 
     def authenticate_admin!
-      redirect_to new_admin_session_path unless current_admin
+      redirect_to new_admin_session_url unless current_admin
     end
 end

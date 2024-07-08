@@ -17,46 +17,46 @@ RSpec.describe "Admins::Users", type: :system do
 
       it "管理画面のユーザー一覧にアクセスが成功する" do
         visit admins_users_path
-        expect(page).to have_content("ユーザー")
-        expect(page).to have_content("100")
-        expect(page).to have_selector(".pagination")
+        expect(page).to have_content "ユーザー"
+        expect(page).to have_content "100"
+        expect(page).to have_selector ".pagination"
       end
 
       it "2ページ目への移動が成功する" do
         visit admins_users_path
         click_link "2"
-        expect(page).to have_current_path(admins_users_path(page: 2))
+        expect(page).to have_current_path admins_users_path(page: 2)
       end
 
       it "次のページへの移動が成功する" do
         visit admins_users_path
         click_link "›"
-        expect(page).to have_current_path(admins_users_path(page: 2))
+        expect(page).to have_current_path admins_users_path(page: 2)
       end
 
       it "最後のページへの移動が成功する" do
         visit admins_users_path
         click_link "»"
-        expect(page).to have_current_path(admins_users_path(page: 10))
+        expect(page).to have_current_path admins_users_path(page: 10)
       end
 
       it "前のページへの移動が成功する" do
         visit admins_users_path(page: 2)
         click_link "‹"
-        expect(page).to have_current_path(admins_users_path)
+        expect(page).to have_current_path admins_users_path
       end
 
       it "最初のページへの移動が成功する" do
         visit admins_users_path(page: 10)
         click_link "«"
-        expect(page).to have_current_path(admins_users_path)
+        expect(page).to have_current_path admins_users_path
       end
     end
 
     context "未ログインの場合" do
       it "管理画面のユーザー一覧にアクセスすると管理ログイン画面にリダイレクトされる" do
         visit admins_users_path
-        expect(page).to have_current_path(new_admin_session_path)
+        expect(page).to have_current_path new_admin_session_path
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe "Admins::Users", type: :system do
 
       it "管理画面ユーザー一覧にアクセスすると管理ログイン画面にリダイレクトされる" do
         visit admins_users_path
-        expect(page).to have_current_path(new_admin_session_path)
+        expect(page).to have_current_path new_admin_session_path
       end
     end
   end
@@ -86,8 +86,8 @@ RSpec.describe "Admins::Users", type: :system do
 
       it "管理画面ユーザー編集画面にアクセスが成功する" do
         visit edit_admins_user_path(user)
-        expect(page).to have_content("平日時給")
-        expect(page).to have_content("土日・祝日時給")
+        expect(page).to have_content "平日時給"
+        expect(page).to have_content "土日・祝日時給"
         expect(page).to have_field("wage_weekday_hourly_wage", with: 1000)
         expect(page).to have_field("wage_weekend_hourly_wage", with: 1100)
       end
@@ -97,14 +97,14 @@ RSpec.describe "Admins::Users", type: :system do
         fill_in "平日時給", with: 1200
         fill_in "土日・祝日時給", with: 1300
         click_button "保存"
-        expect(page).to have_current_path(admins_users_path)
+        expect(page).to have_current_path admins_users_path
       end
     end
 
     context "未ログインの場合" do
       it "管理画面のユーザー編集画面にアクセスすると管理ログイン画面にリダイレクトされる" do
         visit edit_admins_user_path(1)
-        expect(page).to have_current_path(new_admin_session_path)
+        expect(page).to have_current_path new_admin_session_path
       end
     end
 
@@ -117,7 +117,7 @@ RSpec.describe "Admins::Users", type: :system do
 
       it "管理画面ユーザー編集画面にアクセスすると管理ログイン画面にリダイレクトされる" do
         visit edit_admins_user_path(1)
-        expect(page).to have_current_path(new_admin_session_path)
+        expect(page).to have_current_path new_admin_session_path
       end
     end
   end
@@ -132,14 +132,14 @@ RSpec.describe "Admins::Users", type: :system do
 
     it "削除ボタンをクリックして確認ダイアログで削除をクリックするとユーザーの削除が成功する", js: true do
       visit edit_admins_user_path(users.first)
-      expect(page).to have_content("削除")
+      expect(page).to have_content "削除"
 
       expect {
         click_link "削除"
       }.to change { User.count }.by(-1)
 
-      expect(page).to have_current_path(admins_users_path, ignore_query: true)
-      expect(page).to have_content("ユーザーを削除しました")
+      expect(page).to have_current_path admins_users_path, ignore_query: true
+      expect(page).to have_content "ユーザーを削除しました"
     end
   end
 end
