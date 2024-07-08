@@ -87,19 +87,39 @@ RSpec.describe Attendance, type: :model do
     end
   end
 
-  describe "#special_day?" do
-    context "出勤日が特別日の場合" do
-      let!(:attendance) { build(:attendance, user:, special_day: true) }
+  describe '#fetch_special_day' do
+    let!(:date) { Date.current }
+    let!(:attendance) { create(:attendance, user:, date: date) }
 
-      it "trueを返す" do
+    context '特別日が存在する場合' do
+      let!(:special_day) { create(:special_day, start_date: date, end_date: date) }
+      
+      it '特別日を取得できる' do
+        expect(attendance.fetch_special_day).to eq(special_day)
+      end
+    end
+
+    context '特別日が存在しない場合' do
+      it 'nilを返す' do
+        expect(attendance.fetch_special_day).to be_nil
+      end
+    end
+  end
+
+  describe '#special_day?' do
+    let!(:date) { Date.current }
+    let!(:attendance) { create(:attendance, user:, date: date) }
+
+    context '特別日が存在する場合' do
+      let!(:special_day) { create(:special_day, start_date: date, end_date: date) }
+
+      it 'trueを返す' do
         expect(attendance.special_day?).to be true
       end
     end
 
-    context "出勤日が特別日ではない場合" do
-      let!(:attendance) { build(:attendance, user:, special_day: false) }
-
-      it "falseを返す" do
+    context '特別日が存在しない場合' do
+      it 'falseを返す' do
         expect(attendance.special_day?).to be false
       end
     end
