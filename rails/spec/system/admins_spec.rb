@@ -43,9 +43,9 @@ RSpec.describe "Admins", type: :system do
         click_button "ログイン"
 
         expect(Admin.find_by(name: "admin")).not_to be_nil
-        expect(page).to have_current_path(admins_root_path)
-        expect(page).to have_content("ログインしました")
-        expect(page).to have_link("ログアウト")
+        expect(page).to have_current_path admins_root_path
+        expect(page).to have_content "ログインしました"
+        expect(page).to have_link "ログアウト"
       end
 
       it "間違ったユーザー名でログインが失敗する" do
@@ -53,7 +53,7 @@ RSpec.describe "Admins", type: :system do
         fill_in_login_form(invalid_name_info)
         click_button "ログイン"
 
-        expect(page).to have_content("ユーザー名かパスワードが間違っています")
+        expect(page).to have_content "ユーザー名かパスワードが間違っています"
       end
 
       it "間違ったパスワードでログインが失敗する" do
@@ -61,7 +61,7 @@ RSpec.describe "Admins", type: :system do
         fill_in_login_form(invalid_password_info)
         click_button "ログイン"
 
-        expect(page).to have_content("ユーザー名かパスワードが間違っています")
+        expect(page).to have_content "ユーザー名かパスワードが間違っています"
       end
     end
 
@@ -75,8 +75,8 @@ RSpec.describe "Admins", type: :system do
       it "管理ユーザーログインページに遷移しようとすると管理ダッシュボードにリダイレクトされる" do
         visit new_admin_session_path
 
-        expect(page).to have_current_path(admins_root_path)
-        expect(page).to have_content("すでにログイン済みです")
+        expect(page).to have_current_path admins_root_path
+        expect(page).to have_content "すでにログイン済みです"
       end
     end
   end
@@ -93,11 +93,11 @@ RSpec.describe "Admins", type: :system do
 
     it "ログアウトが成功する" do
       click_link "ログアウト"
-      expect(page).to have_content("ログアウトしました")
-      expect(page).to have_current_path(new_admin_session_path)
-      expect(page).to have_link("ログイン")
-      expect(page).to have_link("アカウント登録")
-      expect(page).not_to have_link("ログアウト")
+      expect(page).to have_content "ログアウトしました"
+      expect(page).to have_current_path new_admin_session_path
+      expect(page).to have_link "ログイン"
+      expect(page).to have_link "アカウント登録"
+      expect(page).not_to have_link "ログアウト"
     end
   end
 end

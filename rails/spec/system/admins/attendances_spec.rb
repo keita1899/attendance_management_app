@@ -39,38 +39,38 @@ RSpec.describe "Admins::Attendances", type: :system do
       it "2ページ目への移動が成功する" do
         visit admins_attendances_path
         click_link "2"
-        expect(page).to have_current_path(admins_attendances_path(page: 2))
+        expect(page).to have_current_path admins_attendances_path(page: 2)
       end
 
       it "次のページへの移動が成功する" do
         visit admins_attendances_path
         click_link "›"
-        expect(page).to have_current_path(admins_attendances_path(page: 2))
+        expect(page).to have_current_path admins_attendances_path(page: 2)
       end
 
       it "最後のページへの移動が成功する" do
         visit admins_attendances_path
         click_link "»"
-        expect(page).to have_current_path(admins_attendances_path(page: 10))
+        expect(page).to have_current_path admins_attendances_path(page: 10)
       end
 
       it "前のページへの移動が成功する" do
         visit admins_attendances_path(page: 2)
         click_link "‹"
-        expect(page).to have_current_path(admins_attendances_path)
+        expect(page).to have_current_path admins_attendances_path
       end
 
       it "最初のページへの移動が成功する" do
         visit admins_attendances_path(page: 10)
         click_link "«"
-        expect(page).to have_current_path(admins_attendances_path)
+        expect(page).to have_current_path admins_attendances_path
       end
     end
 
     context "管理者が未ログインの場合" do
       it "管理勤怠一覧画面にアクセスすると管理ログイン画面にリダイレクトされる" do
         visit admins_attendances_path
-        expect(page).to have_current_path(new_admin_session_path)
+        expect(page).to have_current_path new_admin_session_path
       end
     end
 
@@ -83,7 +83,7 @@ RSpec.describe "Admins::Attendances", type: :system do
 
       it "一般ユーザーが管理勤怠一覧画面にアクセスすると管理ログイン画面にリダイレクトされる" do
         visit admins_attendances_path
-        expect(page).to have_current_path(new_admin_session_path)
+        expect(page).to have_current_path new_admin_session_path
       end
     end
   end

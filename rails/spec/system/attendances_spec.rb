@@ -30,7 +30,7 @@ RSpec.describe "Attendances", type: :system do
       it "ログイン画面にリダイレクトされる" do
         visit attendances_path
 
-        expect(page).to have_current_path(new_user_session_path)
+        expect(page).to have_current_path new_user_session_path
       end
     end
 
@@ -194,7 +194,7 @@ RSpec.describe "Attendances", type: :system do
       it "ログイン画面にリダイレクトされる" do
         visit date_attendances_path(attendance.date)
 
-        expect(page).to have_current_path(new_user_session_path)
+        expect(page).to have_current_path new_user_session_path
       end
     end
   end
@@ -213,7 +213,7 @@ RSpec.describe "Attendances", type: :system do
 
         click_button "出勤"
 
-        expect(page).to have_content("出勤しました")
+        expect(page).to have_content "出勤しました"
         expect(page).to have_button "出勤", disabled: true
         expect(page).to have_button "退勤"
       end

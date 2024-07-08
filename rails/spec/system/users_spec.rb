@@ -51,7 +51,7 @@ RSpec.describe "Users", type: :system do
         fill_in_registration_form(valid_user_info)
         click_button "登録"
 
-        expect(page).to have_content("アカウント登録が完了しました")
+        expect(page).to have_content "アカウント登録が完了しました"
         expect(User.find_by(email: "test@example.com")).not_to be_nil
       end
 
@@ -60,7 +60,7 @@ RSpec.describe "Users", type: :system do
         fill_in_registration_form(invalid_user_info)
         click_button "登録"
 
-        expect(page).to have_content("アカウント登録に失敗しました")
+        expect(page).to have_content "アカウント登録に失敗しました"
         expect(User.find_by(email: "test@example.com")).to be_nil
       end
     end
@@ -76,8 +76,8 @@ RSpec.describe "Users", type: :system do
       it "アカウント登録ページに遷移しようとするとカレンダーページにリダイレクトされる" do
         visit new_user_registration_path
 
-        expect(page).to have_current_path(root_path)
-        expect(page).to have_content("すでにログイン済みです")
+        expect(page).to have_current_path root_path
+        expect(page).to have_content "すでにログイン済みです"
       end
     end
   end
@@ -93,8 +93,8 @@ RSpec.describe "Users", type: :system do
         visit new_user_session_path
         fill_in_login_form(valid_login_info)
         click_button "ログイン"
-        expect(page).to have_content("ログインしました")
-        expect(page).to have_link("ログアウト")
+        expect(page).to have_content "ログインしました"
+        expect(page).to have_link "ログアウト"
         expect(User.find_by(email: "test@example.com")).not_to be_nil
       end
 
@@ -103,7 +103,7 @@ RSpec.describe "Users", type: :system do
         fill_in_login_form(invalid_email_info)
         click_button "ログイン"
 
-        expect(page).to have_content("メールアドレスかパスワードが間違っています")
+        expect(page).to have_content "メールアドレスかパスワードが間違っています"
       end
 
       it "間違ったパスワードでログインが失敗する" do
@@ -111,7 +111,7 @@ RSpec.describe "Users", type: :system do
         fill_in_login_form(invalid_password_info)
         click_button "ログイン"
 
-        expect(page).to have_content("メールアドレスかパスワードが間違っています")
+        expect(page).to have_content "メールアドレスかパスワードが間違っています"
       end
     end
 
@@ -123,8 +123,8 @@ RSpec.describe "Users", type: :system do
       it "ログインページに遷移しようとするとカレンダーページにリダイレクトされる" do
         visit new_user_session_path
 
-        expect(page).to have_current_path(root_path)
-        expect(page).to have_content("すでにログイン済みです")
+        expect(page).to have_current_path root_path
+        expect(page).to have_content "すでにログイン済みです"
       end
     end
   end
@@ -139,11 +139,11 @@ RSpec.describe "Users", type: :system do
     it "ログアウトが成功する" do
       visit root_path
       click_link "ログアウト"
-      expect(page).to have_content("ログアウトしました")
-      expect(page).to have_current_path(new_user_session_path)
-      expect(page).to have_link("ログイン")
-      expect(page).to have_link("アカウント登録")
-      expect(page).not_to have_link("ログアウト")
+      expect(page).to have_content "ログアウトしました"
+      expect(page).to have_current_path new_user_session_path
+      expect(page).to have_link "ログイン"
+      expect(page).to have_link "アカウント登録"
+      expect(page).not_to have_link "ログアウト"
     end
   end
 
@@ -152,7 +152,7 @@ RSpec.describe "Users", type: :system do
       it "マイページにアクセスしようとするとログインページにリダイレクトされる" do
         visit mypage_path
 
-        expect(page).to have_current_path(new_user_session_path)
+        expect(page).to have_current_path new_user_session_path
       end
     end
 
@@ -166,9 +166,9 @@ RSpec.describe "Users", type: :system do
 
       it "マイページへのアクセスが成功する" do
         visit mypage_path
-        expect(page).to have_title("マイページ")
-        expect(page).to have_content("アカウント情報")
-        expect(page).to have_content("給与情報")
+        expect(page).to have_title "マイページ"
+        expect(page).to have_content "アカウント情報"
+        expect(page).to have_content "給与情報"
       end
     end
   end
