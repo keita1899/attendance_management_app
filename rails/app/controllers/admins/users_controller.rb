@@ -9,6 +9,7 @@ class Admins::UsersController < Admins::BaseController
 
   def edit
     @wage = @user.wage || @user.build_wage
+    @attendances = @user.attendances.page(params[:page]).order("created_at DESC")
   end
 
   def update
