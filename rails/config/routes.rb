@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     passwords: "users/passwords",
     registrations: "users/registrations",
     confirmations: "users/confirmations",
-  }, path: 'users'
+  }, path: "users"
 
   resources :attendances, only: [:index, :new] do
     collection do
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   devise_for :admins, controllers: {
     sessions: "admins/sessions",
-  }, path: 'admins'
+  }, path: "admins"
 
   namespace :admins do
     root to: "dashboard#index"

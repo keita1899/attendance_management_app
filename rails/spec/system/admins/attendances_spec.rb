@@ -6,16 +6,16 @@ RSpec.describe "Admins::Attendances", type: :system do
   end
 
   def create_users_with_attendances(count = 100)
-    count.times do |n|
+    count.times do |_n|
       user = create(:user)
       create(:attendance, user:)
     end
   end
 
-  describe '管理勤怠一覧' do
+  describe "管理勤怠一覧" do
     let!(:admin) { create(:admin, name: "admin", password: "password") }
 
-    context '管理者がログイン済みの場合' do
+    context "管理者がログイン済みの場合" do
       before do
         create_users_with_attendances(100)
 
@@ -23,7 +23,7 @@ RSpec.describe "Admins::Attendances", type: :system do
         visit admins_attendances_path
       end
 
-      it '管理勤怠一覧画面にアクセスが成功する' do
+      it "管理勤怠一覧画面にアクセスが成功する" do
         expect(page).to have_content "管理勤怠一覧"
         expect(page).to have_content "admin"
         expect(page).to have_content "ログアウト"
@@ -67,26 +67,24 @@ RSpec.describe "Admins::Attendances", type: :system do
       end
     end
 
-    context '管理者が未ログインの場合' do
-      it '管理勤怠一覧画面にアクセスすると管理ログイン画面にリダイレクトされる' do
+    context "管理者が未ログインの場合" do
+      it "管理勤怠一覧画面にアクセスすると管理ログイン画面にリダイレクトされる" do
         visit admins_attendances_path
         expect(page).to have_current_path(new_admin_session_path)
       end
     end
 
-    context '一般ユーザーがログイン済みの場合' do
+    context "一般ユーザーがログイン済みの場合" do
       let!(:user) { create(:user) }
 
       before do
         sign_in user
       end
 
-      it '一般ユーザーが管理勤怠一覧画面にアクセスすると管理ログイン画面にリダイレクトされる' do
+      it "一般ユーザーが管理勤怠一覧画面にアクセスすると管理ログイン画面にリダイレクトされる" do
         visit admins_attendances_path
         expect(page).to have_current_path(new_admin_session_path)
       end
     end
-
   end
-
 end

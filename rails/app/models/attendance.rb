@@ -19,7 +19,7 @@ class Attendance < ApplicationRecord
   end
 
   def fetch_special_day
-    @special_day ||= SpecialDay.for_date(date)
+    @fetch_special_day ||= SpecialDay.for_date(date)
   end
 
   def special_day?
