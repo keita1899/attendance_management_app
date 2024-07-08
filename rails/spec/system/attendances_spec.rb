@@ -117,12 +117,14 @@ RSpec.describe "Attendances", type: :system do
     context "ログインしている場合" do
       before do
         sign_in user
-        visit date_attendances_path(Time.current)
+        visit date_attendances_path(date: Date.current)
       end
 
       context "日付が今日の場合" do
         context "既に勤怠記録がある場合" do
-          let!(:attendance) { create(:attendance, user:, date: Date.current, clock_in_time: "10:00", clock_out_time: "14:00") }
+          let!(:attendance) {
+            create(:attendance, user:, date: Date.current, clock_in_time: Time.zone.parse("10:00"), clock_out_time: Time.zone.parse("14:00"))
+          }
 
           it "既存の勤怠記録を表示し、データベースに存在することを確認する" do
             expect(page).to have_button "出勤", disabled: true
@@ -147,9 +149,10 @@ RSpec.describe "Attendances", type: :system do
 
         context "特別日の場合" do
           let!(:special_day) { create(:special_day, start_date: Date.current, end_date: Date.current) }
-          let!(:attendance) { create(:attendance, user:, date: Date.current, special_day: true) }
+          let!(:attendance) { create(:attendance, user:, date: Date.current) }
 
           it "日付の下に特別日と表示される" do
+            visit date_attendances_path(date: Date.current)
             expect(page).to have_content "（特別日）"
           end
         end
