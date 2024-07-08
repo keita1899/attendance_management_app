@@ -30,6 +30,8 @@ class AttendancesController < ApplicationController
 
     def set_attendance
       @date = Date.parse(params[:date])
-      @attendance = Attendance.find_or_initialize_by(user_id: current_user.id, date: @date)
+      @special_day = SpecialDay.for_date(@date)
+      @attendance = Attendance.find_or_initialize_by(user_id: current_user.id, date: @date, special_day: @special_day.present?)
+      logger.debug @attendance.special_day
     end
 end
