@@ -99,6 +99,59 @@ RSpec.describe "Admins::Users", type: :system do
         click_button "保存"
         expect(page).to have_current_path admins_users_path
       end
+
+      context "ユーザーが勤怠データを持っている場合" do
+        let!(:attendances) { create_list(:attendance, 100, user:) }
+
+        it "ユーザーの勤怠一覧が表示される" do
+          visit edit_admins_user_path(user)
+          expect(page).to have_content "ユーザー勤怠一覧"
+          expect(page).to have_content "No"
+          expect(page).to have_content "名前"
+          expect(page).to have_content "日付"
+          expect(page).to have_content "出勤時刻"
+          expect(page).to have_content "退勤時刻"
+          expect(page).to have_content "100"
+          expect(page).to have_selector ".pagination"
+        end
+
+        it "2ページ目への移動が成功する" do
+          visit edit_admins_user_path(user)
+          click_link "2"
+          expect(page).to have_current_path edit_admins_user_path(user, page: 2)
+        end
+
+        it "次のページへの移動が成功する" do
+          visit edit_admins_user_path(user)
+          click_link "›"
+          expect(page).to have_current_path edit_admins_user_path(user, page: 2)
+        end
+
+        it "最後のページへの移動が成功する" do
+          visit edit_admins_user_path(user)
+          click_link "»"
+          expect(page).to have_current_path edit_admins_user_path(user, page: 10)
+        end
+
+        it "前のページへの移動が成功する" do
+          visit edit_admins_user_path(user, page: 2)
+          click_link "‹"
+          expect(page).to have_current_path edit_admins_user_path(user)
+        end
+
+        it "最初のページへの移動が成功する" do
+          visit edit_admins_user_path(user, page: 10)
+          click_link "«"
+          expect(page).to have_current_path edit_admins_user_path(user)
+        end
+      end
+
+      context "ユーザーが勤怠データを持っていない場合" do
+        it "0件と表示される" do
+          visit edit_admins_user_path(user)
+          expect(page).to have_content "0件"
+        end
+      end
     end
 
     context "未ログインの場合" do

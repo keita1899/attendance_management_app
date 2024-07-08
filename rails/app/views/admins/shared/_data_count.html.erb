@@ -1,0 +1,20 @@
+<% if resources.any? %>
+  <div>
+    <span class="fs-2 fw-bold">
+      <%= resources.total_count %>
+    </span>
+    件中
+    <span class="fs-2 fw-bold">
+      <%= resources.offset_value %>
+    </span>
+    〜
+    <span class="fs-2 fw-bold">
+      <%= resources.offset_value + resources.length %>
+    </span>
+    件
+  </div>
+<% else %>
+  <div>
+    <span class="fs-2 fw-bold">0</span>件
+  </div>
+<% end %>
