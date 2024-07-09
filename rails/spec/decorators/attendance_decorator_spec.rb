@@ -134,4 +134,35 @@ RSpec.describe AttendanceDecorator do
       end
     end
   end
+
+  describe "#status" do
+    subject { attendance.decorate }
+
+    context "未出勤の場合" do
+      let!(:attendance) { build(:attendance, date: Date.current, clock_in_time: nil, clock_out_time: nil, user:) }
+
+      it "未出勤のバッジのHTMLを返す" do
+        expect(subject.status).to eq('<span class="badge bg-secondary">未出勤</span>'.html_safe)
+      end
+    end
+
+    context "出勤中の場合" do
+      let!(:attendance) { build(:attendance, date: Date.current, clock_in_time: Time.current.change(hour: 10, min: 0), clock_out_time: nil, user:) }
+
+      it "出勤中のバッジのHTMLを返す" do
+        expect(subject.status).to eq('<span class="badge bg-success">出勤中</span>'.html_safe)
+      end
+    end
+
+    context "退勤済の場合" do
+      let!(:attendance) {
+        build(:attendance, date: Date.current, clock_in_time: Time.current.change(hour: 10, min: 0), clock_out_time: Time.current.change(hour: 14, min: 0),
+                           user:)
+      }
+
+      it "退勤済のバッジのHTMLを返す" do
+        expect(subject.status).to eq('<span class="badge bg-dark">退勤済</span>'.html_safe)
+      end
+    end
+  end
 end
