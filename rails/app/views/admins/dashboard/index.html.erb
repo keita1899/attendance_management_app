@@ -2,38 +2,34 @@
 
 <div class="col-md-10 mx-auto">
   <div class="d-flex justify-content-between align-items-center">
-    <h2>本日の出勤</h2>
-    <div class="">出勤人数 <span class="fs-2 fw-bold">0</span> 人</div>
+    <h2>本日 <%= l(Date.current, format: :long) %> の出勤</h2>
+    <div class="">出勤人数 <span class="fs-2 fw-bold"><%= @attendances.size %></span> 人</div>
   </div>
   
-  <table class="table">
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>名前</th>
-        <th>出勤時間</th>
-        <th>退勤時間</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>山田太郎</td>
-        <td>10:00</td>
-        <td>14:00</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>山田太郎</td>
-        <td>10:00</td>
-        <td>14:00</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>山田太郎</td>
-        <td>10:00</td>
-        <td>14:00</td>
-      </tr>
-    </tbody>
-  </table>
+  <% if @attendances.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>状態</th>
+          <th>名前</th>
+          <th>出勤時間</th>
+          <th>退勤時間</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @attendances.each.with_index(1) do |attendance, _n| %>
+          <tr>
+            <td><%= _n %></td>
+            <td><%= attendance.decorate.status %></td>
+            <td><%= attendance.user.full_name %></td>
+            <td><%= format_time_only(attendance.clock_in_time) %></td>
+            <td><%= format_time_only(attendance.clock_out_time) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-center mt-5">本日は出勤者がいません</p>
+  <% end %>
 </div>

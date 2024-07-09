@@ -11,8 +11,8 @@
       <tr>
         <th class="col-1">No</th>
         <th class="col-4">名前</th>
-        <th class="col-3">作成日</th>
-        <th class="col-3">更新日</th>
+        <th class="col-3">作成日時</th>
+        <th class="col-3">更新日時</th>
         <th class="col-1"></th>
       </tr>
     </thead>
@@ -21,8 +21,8 @@
       <tr>
         <td class="align-middle col-1"><%= user.id %></td>
         <td class="align-middle col-4"><%= user.full_name %></td>
-        <td class="align-middle col-3"><%= l user.created_at %></td>
-        <td class="align-middle col-3"><%= l user.updated_at %></td>
+        <td class="align-middle col-3"><%= l(user.created_at, format: :long) %></td>
+        <td class="align-middle col-3"><%= l(user.updated_at, format: :long) %></td>
         <td class="align-middle col-1">
           <%= link_to edit_admins_user_path(user), class: 'btn btn-success' do %>
             <i class="bi bi-pencil-square"></i>
